@@ -1,6 +1,6 @@
-/target/
 /.settings/
+/target/
 /.classpath
 /.project
 /*.zip
-/*.zip.sha1
+/plugin.xml

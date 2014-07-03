@@ -15,10 +15,10 @@ class TechTalk implements Serializable {
 		table "TechTalk"
 		id generator:'assigned'
 		version false
-		tb2s cascade: "all-delete-orphan"
+		jobs cascade: "all-delete-orphan"
 	}
 
-	static hasMany = [tb2s:Table2]
+	static hasMany = [jobs:Jobs]
 	
 	
 	public boolean equals(java.lang.Object other) {

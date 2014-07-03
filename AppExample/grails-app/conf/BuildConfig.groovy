@@ -21,7 +21,7 @@ grails.project.fork = [
     console: [maxMemory: 768, minMemory: 64, debug: false]
 ]
 
-grails.plugin.location.'GormExample' = "..\\GormExample"
+grails.plugin.location.'GormExample' = "../GormExample"
 //grails.plugin.location.'notaviable-Example' = "G:\\workspace2\\notaviable-Example"
 
 grails.project.dependency.resolver = "maven" // or ivy
@@ -64,7 +64,7 @@ grails.project.dependency.resolution = {
         compile ":scaffolding:2.1.2"
         compile ':cache:1.1.7'
         compile ":asset-pipeline:1.9.0"
-//		compile ":gorm-example:0.1"
+		compile ":gorm-example:0.1"
 		compile ":rest-client-builder:2.0.3"
         // plugins needed at runtime but not for compilation
         runtime ":hibernate4:4.3.5.4" // or ":hibernate:3.6.10.16"

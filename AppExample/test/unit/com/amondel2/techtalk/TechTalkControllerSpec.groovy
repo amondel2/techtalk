@@ -1,4 +1,6 @@
-package com.amondel2.TechTalk
+package com.amondel2.techtalk
+
+import com.amondel2.remove.TechTalkController;
 
 import grails.test.mixin.TestFor
 import spock.lang.Specification

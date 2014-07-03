@@ -1,5 +1,7 @@
 package com.amondel2.techtalk
 
+import com.amondel2.remove.TechTalk;
+
 import grails.test.mixin.TestFor
 import spock.lang.Specification
 

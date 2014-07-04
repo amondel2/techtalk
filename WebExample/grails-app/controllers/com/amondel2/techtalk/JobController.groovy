@@ -7,8 +7,7 @@ class JobController {
     def index() {redirect(action: "list")}
 	def list(){
 		def  resp = rest.get(grailsApplication.config.app.url + "/jobs")
-		render(contentType:"text/json"){resp.json}		
-		
+		render(contentType:"text/json"){resp.json}
 	}
 }
  

@@ -1,8 +1,11 @@
 package com.amondel2.techtalk
 
 import groovy.transform.EqualsAndHashCode
+import grails.rest.*
+
 
 @EqualsAndHashCode
+@Resource(uri='/jobs', formats=['json', 'xml'])
 class Jobs {
 
     static constraints = {

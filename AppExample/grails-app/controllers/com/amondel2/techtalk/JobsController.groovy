@@ -8,7 +8,4 @@ class JobsController extends RestfulController {
 	JobsController() {
 		super(Jobs)
 	} 
-	
-
-
 }

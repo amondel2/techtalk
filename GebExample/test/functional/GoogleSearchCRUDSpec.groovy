@@ -14,7 +14,7 @@ class GoogleSearchCRUDSpec extends GebReportingSpec {
 		searchBox.size() == 1
 	}
 
-	def "search for dogs Google"() {
+	def "Search for Dogs"() {
 		when:
 		search "Dogs"
 		then:

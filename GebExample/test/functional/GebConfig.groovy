@@ -14,6 +14,9 @@ environments {
  // run as “grails -Dgeb.env=chrome test-app”
  // See: http://code.google.com/p/selenium/wiki/ChromeDriver
  chrome {
+	 //Get Chrome Drive from http://chromedriver.storage.googleapis.com/index.html
+	 //Then set driver here
+	 System.setProperty('webdriver.chrome.driver', '/Users/Aaron/Downloads/chromedriver')
 	 driver = { new ChromeDriver() }
  }
  

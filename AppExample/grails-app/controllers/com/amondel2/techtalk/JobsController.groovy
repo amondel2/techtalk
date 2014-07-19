@@ -7,5 +7,5 @@ class JobsController extends RestfulController {
 	static responseFormats = ['json', 'xml']
 	JobsController() {
 		super(Jobs)
-	} 
+	}
 }

@@ -50,21 +50,22 @@ grails.project.dependency.resolution = {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
         // runtime 'mysql:mysql-connector-java:5.1.29'
         // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
+	test "org.spockframework:spock-grails-support:0.7-groovy-2.0"
     }
 
     plugins {
         // plugins for the build system only
         build ":tomcat:7.0.54"
-
+	test(":spock:0.7") {
+	    exclude "spock-grails-support"
+	  }
         // plugins for the compile step
         compile ":scaffolding:2.1.2"
         compile ':cache:1.1.7'
-        compile ":asset-pipeline:1.8.11"
-
-        // plugins needed at runtime but not for compilation
-        runtime ":hibernate4:4.3.5.4" // or ":hibernate:3.6.10.16"
+        compile ':asset-pipeline:1.9.4'
+	compile ":angularjs:0.9.4"
         runtime ":jquery:1.11.1"
-		compile ":rest-client-builder:2.0.3"
+	compile ":rest-client-builder:2.0.3"
         // Uncomment these to enable additional asset-pipeline capabilities
         //compile ":sass-asset-pipeline:1.7.4"
         //compile ":less-asset-pipeline:1.7.0"

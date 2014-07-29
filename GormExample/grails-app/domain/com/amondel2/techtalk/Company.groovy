@@ -1,8 +1,10 @@
 package com.amondel2.techtalk
 
 import groovy.transform.EqualsAndHashCode
+import grails.rest.*
 
 @EqualsAndHashCode(includes=['id','name'])
+@Resource(uri='/company', formats=['json', 'xml'])
 class Company implements Serializable  {
 
     static constraints = {

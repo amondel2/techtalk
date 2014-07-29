@@ -6,8 +6,9 @@
 // to create separate JavaScript files as needed.
 //
 //= require jquery
-//= require_tree .
 //= require_self
+//= require grails-angularjs
+//= require jstree
 
 if (typeof jQuery !== 'undefined') {
 	(function($) {

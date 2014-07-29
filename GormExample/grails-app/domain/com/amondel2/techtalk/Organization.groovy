@@ -2,8 +2,10 @@ package com.amondel2.techtalk
 import java.io.Serializable;
 
 import groovy.transform.EqualsAndHashCode
+import grails.rest.*
 
 @EqualsAndHashCode(includes=['id'])
+@Resource(uri='/organization', formats=['json', 'xml'])
 class Organization implements Serializable {
      
     static constraints = {

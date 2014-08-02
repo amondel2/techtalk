@@ -8,7 +8,7 @@ class CompanyService extends BaseService {
 	def transofrmResult = { node ->
 	  [ 'id' : node.id, 'text': node.name, 'children' :node.organizations?.size() > 0 ? true : false,childType: 'organization']
 	}
-	super.transformResul(transofrmResult,jsonResult)
+	super.transformResult(transofrmResult,jsonResult)
     }
          
     def update(params){

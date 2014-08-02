@@ -9,7 +9,7 @@ class JobService extends BaseService {
 	def transofrmResult = { node ->
 	    [ 'id' : node.id, 'text': node.name, 'children' : node.employees?.size() > 0 ? true : false,childType: 'employee']
 	}
-	super.transformResul(transofrmResult,jsonResult)
+	super.transformResult(transofrmResult,jsonResult)
     }
 
     def update(params){

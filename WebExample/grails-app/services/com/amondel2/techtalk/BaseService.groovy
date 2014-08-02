@@ -31,7 +31,7 @@ class BaseService {
 	}
     }
     
-    def transformResul(transofrmResult,jsonResult) {
+    def transformResult(transofrmResult,jsonResult) {
 	def plist = new PromiseList()
 	def results = []
 	jsonResult.each{ it ->

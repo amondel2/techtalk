@@ -9,7 +9,7 @@ class OrganizationService extends BaseService {
 	def transofrmResult = { node ->
 	    [ 'id' : node.id, 'text': node.name, 'children' : node.jobs?.size() > 0 ? true : false, childType: 'job']
 	}
-	super.transformResul(transofrmResult,jsonResult)
+	super.transformResult(transofrmResult,jsonResult)
     }
 
     def update(params){

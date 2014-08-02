@@ -19,17 +19,18 @@ class Jobs {
 	table "Jobs"
 	id generator: 'assigned'
 	version false
-	employees cascade: "all-delete-orphan"
 	organaization cascade: "all"
-
+	employees cascade: "all-delete-orphan"
     }
-    
+
     public String toString(){
 	return this.name
     }
 
     static hasMany = [employees:Employees]
+
     static belongsTo = [organization:Organization]
+
 
     String name
     String id

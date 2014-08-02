@@ -1,24 +1,26 @@
 package com.amondel2.techtalk
 
 class JobController {
-    def grailsApplication
-    def rest = new grails.plugins.rest.client.RestBuilder()
     def jobService
     
     def index() {redirect(action: "list")}
     def list(){
-	def url = grailsApplication.config.app.url
-	def  resp = rest.get(grailsApplication.config.app.url + "/jobs") {
-	    accept "application/json"
-
-	}
+	def  resp = jobService.queryGet("/jobs")
 	render(contentType:"text/json"){resp.json}
     }
     
     def parent() {
-	def  resp = rest.get(grailsApplication.config.app.url + "/jobs/parent/" + params.id) {
-	    accept "application/json"
-	}
+	def  resp = jobService.queryGet("/jobs/parent/" + params.id)
 	render(contentType:"text/json"){jobService.transformResultForJtree(resp.json)}
     }
+    
+   def update() {
+	jobService.update(params)
+	render(contentType:"text/json"){["message":"Success"]}
+    }
+   
+   def delete() {
+       jobService.deleteQuertStr("/jobs/" + params?.id)
+       render(contentType:"text/json"){["message":"Success"]}
+   }
 }

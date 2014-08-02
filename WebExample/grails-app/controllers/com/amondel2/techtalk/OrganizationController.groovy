@@ -1,18 +1,23 @@
 package com.amondel2.techtalk
-
+import grails.converters.JSON
+import grails.web.JSONBuilder
 
 class OrganizationController {
-    def grailsApplication
     def organizationService
-    def jobService
-    def rest = new grails.plugins.rest.client.RestBuilder()
-
-    def index() {redirect(action: "list", params:params)}
+   
+    
     def parent(){
-	def url = grailsApplication.config.app.url
-	def  resp = rest.get(grailsApplication.config.app.url + "/organization") {
-	    accept "application/json"
-	}
+	def  resp = organizationService.queryGet("/organization")
 	render(contentType:"text/json"){organizationService.transformResultForJtree(resp.json)}
+    }
+    
+    def update() {
+	organizationService.update(params)
+	render(contentType:"text/json"){["message":"Success"]}
+    }
+    
+    def delete() {
+	organizationService.deleteQuertStr("/organization/" + params?.id)
+	render(contentType:"text/json"){["message":"Success"]}
     }
 }

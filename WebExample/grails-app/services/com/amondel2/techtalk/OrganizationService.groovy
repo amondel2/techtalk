@@ -1,23 +1,24 @@
 package com.amondel2.techtalk
 
-import com.sun.corba.se.spi.orbutil.closure.Closure;
+import grails.converters.JSON
+import grails.web.JSONBuilder
 
-import grails.transaction.Transactional
-import static grails.async.Promises.*
-import grails.async.*
-
-@Transactional
-class OrganizationService {
+class OrganizationService extends BaseService {
 
     def transformResultForJtree(jsonResult) {
-	def plist = new PromiseList()
-	def results = []
 	def transofrmResult = { node ->
-	  [ 'id' : node.id, 'text': node.name, 'children' : node.jobs?.size() > 0 ? true : false, childType: 'job']
+	    [ 'id' : node.id, 'text': node.name, 'children' : node.jobs?.size() > 0 ? true : false, childType: 'job']
 	}
-	jsonResult.each{ it -> 
-	    plist << transofrmResult(it)
-	}
-	plist.get()
+	super.transformResul(transofrmResult,jsonResult)
     }
+
+    def update(params){
+	def builder = new JSONBuilder()
+	JSON j = builder.build {
+	    name = params.name
+	    id = params.id
+	}
+	super.update(params,j,"organization")
+    }
+   
 }

@@ -1,15 +1,10 @@
 package com.amondel2.techtalk
 
 class CompanyController {
-    def grailsApplication
-    def rest = new grails.plugins.rest.client.RestBuilder()
     def companyService
 
     def index() {
-	def appURL = grailsApplication.config.app.url
-	def  resp = rest.get(appURL + "/company") {
-	    accept "application/json"
-	}
+	def  resp = companyService.queryGet("/company")
 	render(contentType:"text/json"){resp.json?.getAt(0)}
     }
 
@@ -17,12 +12,18 @@ class CompanyController {
 	if ( params.id && params.childType) {
 	    redirect(controller: params.childType, action: "parent", params:params)
 	} else {
-	    def appURL = grailsApplication.config.app.url
-	    def  resp = rest.get(appURL + "/company") {
-		accept "application/json"
-	    }
+	    def resp = companyService.queryGet("/company")
 	    render(contentType:"text/json"){companyService.transformResultForJtree(resp.json)}
 	}
+    }
+
+    def update() {
+	companyService.update(params)
+	render(contentType:"text/json"){["message":"Success"]}
+    }
+    
+    def delete() {
+	render(contentType:"text/json"){["message":"FAILURE"]} 
     }
 
 }

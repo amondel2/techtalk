@@ -2,10 +2,8 @@ package com.amondel2.techtalk
 
 import grails.rest.RestfulController
 import static org.springframework.http.HttpStatus.*
-import grails.rest.RestfulController;
-import grails.transaction.Transactional
+import static org.springframework.http.HttpMethod.*
 
-@Transactional(readOnly = true)
 class OrganizationController extends RestfulController {
   static responseFormats = ['json', 'xml']
     OrganizationController() {

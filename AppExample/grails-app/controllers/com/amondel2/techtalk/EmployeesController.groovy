@@ -2,9 +2,8 @@ package com.amondel2.techtalk
 
 import grails.rest.RestfulController
 import static org.springframework.http.HttpStatus.*
-import grails.transaction.Transactional
+import static org.springframework.http.HttpMethod.*
 
-@Transactional(readOnly = true)
 class EmployeesController extends RestfulController {
    
     static responseFormats = ['json', 'xml']
@@ -17,7 +16,6 @@ class EmployeesController extends RestfulController {
      }
     
     def directReports() {
-//	respond Employees.findAllById(params?.id).directReports
 	respond Employees.findAllByBoss(Employees.findAllById(params?.id))
     }
 }

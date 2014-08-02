@@ -29,8 +29,8 @@ class Employees implements Serializable  {
 	boss column: 'boss_id'
 	id generator:'assigned'
 	version false
-	job cascade: "all"
-	boss cascade: "all"
+	job cascade: "none"
+	boss cascade: "none"
 	directReports cascade: "all-delete-orphan"
     }
 

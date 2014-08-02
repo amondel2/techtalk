@@ -1,4 +1,4 @@
-angular.module('myApp.directives', []).directive('angulardir', function () {
+angular.module('myApp.directives', []).directive('angulardir', function ($http,apiUrl) {
 	return {
 		restrict: 'A',
 		link: function(scope, element, attrs) {
@@ -51,27 +51,40 @@ angular.module('myApp.directives', []).directive('angulardir', function () {
 				    }
 			}).on('delete_node.jstree', function (e, data) {
 				
-//		$.get('?operation=delete_node', { 'id' : data.node.id })
-//			.fail(function () {
-//				data.instance.refresh();
-//			});
-				
-				
-				if(data.node.childType == "job") {
-					scope.changeOrgCount(scope.orgCount - 1);
+				var controller = "company";
+				if(data.node.parent) {
+					var parentNode = $('#tree').jstree().get_node(data.node.parent);
+					if(parentNode && parentNode.parent != null)
+						controller = parentNode.childType;
 				}
-				scope.$digest();
+				$http.delete(apiUrl  + controller + "/" + data.node.id).success(function(myData, status, headers, config) {
+					if(data.node.childType == "job") {
+						scope.changeOrgCount(scope.orgCount - 1);
+						if(!scope.$$phase) {
+							//$digest or $apply
+							scope.$digest();
+						}
+					}
+				});
 				
 		}).on('rename_node.jstree', function (e, data) {
-			if(data.node.childType == "organization") {
-				scope.companyName = data.text
+			var controller = "company";
+			if(data.node.parent) {
+				var parentNode = $('#tree').jstree().get_node(data.node.parent);
+				if(parentNode && parentNode.parent != null)
+					controller = parentNode.childType;
 			}
-			scope.$digest();
-//		$.get('?operation=rename_node', { 'id' : data.node.id, 'text' : data.text })
-//			.fail(function () {
-//				data.instance.refresh();
-//			});
-	}).on('create_node.jstree', function (e, data) {
+			$http.put(apiUrl  + controller + "/" + data.node.id + "?name=" + data.text).success(function(myData, status, headers, config) {
+				if(data.node.childType == "organization") {
+					scope.companyName = data.text
+					if(!scope.$$phase) {
+						  //$digest or $apply
+						scope.$digest();
+					}
+				}
+		      
+		    });
+		}).on('create_node.jstree', function (e, data) {
 //			var t = $('#tree').jstree('get_selected');
 			var parentNode = $('#tree').jstree().get_node(data.node.parent);
 			if(parentNode.childType == "organization") {
@@ -89,4 +102,3 @@ angular.module('myApp.directives', []).directive('angulardir', function () {
 	}
 	};
 });
-

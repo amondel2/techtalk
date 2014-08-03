@@ -19,6 +19,14 @@ class BaseService {
 	 }
     }
     
+    def save(j,controller){
+	def appURL = grailsApplication.config.app.url + "/" + controller
+	return rest.post(appURL) {
+	     contentType "application/json"
+	     json j
+	 }
+    }
+    
     def deleteQuertStr(qString) {
 	return rest.delete(grailsApplication.config.app.url + qString) {
 	    accept "application/json"

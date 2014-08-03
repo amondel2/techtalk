@@ -11,6 +11,7 @@ class UrlMappings {
 //	"/$controller/edit/$id" { action = [GET:"edit"] }
 	"/$controller/jsTree" { (action = "jsTree") }
 	"/$controller/$id" { action = [GET:"index", PUT:"update", DELETE:"delete"] }
+	"/$controller" { action = [POST:"save"] }
 //	"/$controller" { action = [GET:"list", POST:"save"] }
 
         "/"(view:"/index")

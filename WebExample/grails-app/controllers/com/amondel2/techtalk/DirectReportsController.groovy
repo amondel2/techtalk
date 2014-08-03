@@ -12,7 +12,9 @@ class DirectReportsController {
     }
     
     def update() {
-	employeeService.update(params)
+	def p = request.JSON
+	p.id = params.id
+	employeeService.update(p)
 	render(contentType:"text/json"){["message":"Success"]}
     }
     

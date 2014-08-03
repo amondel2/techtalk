@@ -65,40 +65,45 @@ angular.module('myApp.directives', []).directive('angulardir', function ($http,a
 							scope.$digest();
 						}
 					}
-				});
-				
-		}).on('rename_node.jstree', function (e, data) {
-			var controller = "company";
-			if(data.node.parent) {
-				var parentNode = $('#tree').jstree().get_node(data.node.parent);
-				if(parentNode && parentNode.parent != null)
-					controller = parentNode.childType;
-			}
-			$http.put(apiUrl  + controller + "/" + data.node.id + "?name=" + data.text).success(function(myData, status, headers, config) {
-				if(data.node.childType == "organization") {
-					scope.companyName = data.text
-					if(!scope.$$phase) {
-						  //$digest or $apply
-						scope.$digest();
-					}
+				}).error(function(myData, status, headers, config){
+					data.instance.refresh();
+				});	
+			}).on('rename_node.jstree', function (e, data) {
+				var controller = "company";
+				if(data.node.parent) {
+					var parentNode = $('#tree').jstree().get_node(data.node.parent);
+					if(parentNode && parentNode.parent != null)
+						controller = parentNode.childType;
 				}
-		      
-		    });
-		}).on('create_node.jstree', function (e, data) {
-//			var t = $('#tree').jstree('get_selected');
-			var parentNode = $('#tree').jstree().get_node(data.node.parent);
-			if(parentNode.childType == "organization") {
-				scope.changeOrgCount(scope.orgCount + 1);
-			}
-			scope.$digest();
-//		$.get('?operation=create_node', { 'id' : data.node.parent, 'position' : data.position, 'text' : data.node.text })
-//			.done(function (d) {
-//				data.instance.set_id(data.node, d.id);
-//			})
-//			.fail(function () {
-//				data.instance.refresh();
-//			});
-	});
-	}
+				$http.put(apiUrl  + controller + "/" + data.node.id, {"name" : data.text}).success(function(myData, status, headers, config) {
+					if(data.node.childType == "organization") {
+						scope.companyName = data.text
+						if(!scope.$$phase) {
+							  //$digest or $apply
+							scope.$digest();
+						}
+					}
+				}).error(function(myData, status, headers, config){
+					data.instance.refresh();
+				});	    
+			}).on('create_node.jstree', function (e, data) {
+	//			var t = $('#tree').jstree('get_selected');
+				$http.post(apiUrl  + controller,  { 'parentId' : data.node.parent, 'name' : data.node.text }).success(function(myData, status, headers, config) {
+					if(data.node.childType == "organization") {
+						var parentNode = $('#tree').jstree().get_node(data.node.parent);
+						if(parentNode.childType == "organization") {
+							scope.changeOrgCount(scope.orgCount + 1);
+						}
+						if(!scope.$$phase) {
+							  //$digest or $apply
+							scope.$digest();
+						}
+					}
+					data.instance.set_id(data.node, myData.id);
+				}).error(function(myData, status, headers, config){
+					data.instance.refresh();
+				});	
+			});
+		}
 	};
 });

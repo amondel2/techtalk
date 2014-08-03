@@ -20,5 +20,9 @@ class OrganizationService extends BaseService {
 	}
 	super.update(params,j,"organization")
     }
+    
+    def save(params) {
+	super.save(params,"organization")
+    }
    
 }

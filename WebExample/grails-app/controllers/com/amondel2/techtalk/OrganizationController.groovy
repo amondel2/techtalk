@@ -12,12 +12,19 @@ class OrganizationController {
     }
     
     def update() {
-	organizationService.update(params)
+	def p = request.JSON
+	p.id = params.id 
+	organizationService.update(p)
 	render(contentType:"text/json"){["message":"Success"]}
     }
     
     def delete() {
 	organizationService.deleteQuertStr("/organization/" + params?.id)
+	render(contentType:"text/json"){["message":"Success"]}
+    }
+    
+    def save() {
+	def rtn = organizationService.save(request.JSON)
 	render(contentType:"text/json"){["message":"Success"]}
     }
 }

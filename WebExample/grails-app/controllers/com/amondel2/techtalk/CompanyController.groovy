@@ -18,7 +18,9 @@ class CompanyController {
     }
 
     def update() {
-	companyService.update(params)
+	def p = request.JSON
+	p.id = params.id
+	companyService.update(p)
 	render(contentType:"text/json"){["message":"Success"]}
     }
     

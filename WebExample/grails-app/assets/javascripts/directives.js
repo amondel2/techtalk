@@ -45,7 +45,7 @@ angular.module('myApp.directives', []).directive('angulardir', function ($http,a
 						'responsive' : true
 					}
 				},
-				'plugins' : ['state','dnd','contextmenu','wholerow', "html_data", "ui", "crrm"],
+				'plugins' : ['state','contextmenu','wholerow', "html_data", "ui", "crrm"],
 				 "contextmenu" : {
 				        "items" : customMenu
 				    }

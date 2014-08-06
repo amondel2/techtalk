@@ -20,4 +20,13 @@ class JobService extends BaseService {
 	}
 	super.update(params,j,"jobs")
     }
+    
+    def save(params) {
+	def builder = new JSONBuilder()
+	JSON j = builder.build {
+	    name = params.name
+	    parentId =  params.parentId
+	}
+	super.save(j,"jobs")
+    }
 }

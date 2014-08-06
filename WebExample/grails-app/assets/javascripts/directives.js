@@ -10,8 +10,8 @@ angular.module('myApp.directives', []).directive('angulardir', function ($http,a
 				      "create" : {
 				          "label" : "Create New",
 				          "action": function (obj) { 
-			              node = tree.create_node(node);
-			              tree.edit(node);
+				        	  node = tree.create_node(node);
+			              
 			          }
 				      },
 				      "rename" : {
@@ -87,19 +87,26 @@ angular.module('myApp.directives', []).directive('angulardir', function ($http,a
 					data.instance.refresh();
 				});	    
 			}).on('create_node.jstree', function (e, data) {
-	//			var t = $('#tree').jstree('get_selected');
+				var t = $('#tree').jstree('get_selected');
+				var parentNode = $('#tree').jstree().get_node(t);
+				var controller =  parentNode.childType;
 				$http.post(apiUrl  + controller,  { 'parentId' : data.node.parent, 'name' : data.node.text }).success(function(myData, status, headers, config) {
-					if(data.node.childType == "organization") {
-						var parentNode = $('#tree').jstree().get_node(data.node.parent);
-						if(parentNode.childType == "organization") {
+					
+					if(  myData.message == 'Success' ) {
+					
+					data.node.childType = myData.childType
+					if(controller == "organization") {
 							scope.changeOrgCount(scope.orgCount + 1);
 						}
 						if(!scope.$$phase) {
 							  //$digest or $apply
 							scope.$digest();
 						}
+						data.instance.set_id(data.node, myData.results.id);
+					} else {
+						alert(myData.results.errors[0].message);
+						data.instance.refresh();
 					}
-					data.instance.set_id(data.node, myData.id);
 				}).error(function(myData, status, headers, config){
 					data.instance.refresh();
 				});	

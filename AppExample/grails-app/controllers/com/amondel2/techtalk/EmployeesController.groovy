@@ -18,4 +18,13 @@ class EmployeesController extends RestfulController {
     def directReports() {
 	respond Employees.findAllByBoss(Employees.findAllById(params?.id))
     }
+    
+    @Override
+    protected Employees createResource() {
+	def r =  request.JSON
+	Employees instance = new Employees(r)
+	instance.gender = instance.gender ?: "Male"
+	instance.id = r.id
+	instance
+    }
 }

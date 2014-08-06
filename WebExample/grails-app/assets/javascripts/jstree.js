@@ -4501,7 +4501,7 @@
 				"create" : {
 					"separator_before"	: false,
 					"separator_after"	: true,
-					"_disabled"			: false, //(this.check("create_node", data.reference, {}, "last")),
+					"_disabled"			: false, //(this.check("", data.reference, {}, "last")),
 					"label"				: "Create",
 					"action"			: function (data) {
 						var inst = $.jstree.reference(data.reference),

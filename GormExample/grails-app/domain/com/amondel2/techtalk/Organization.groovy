@@ -19,7 +19,7 @@ class Organization implements Serializable {
 	id generator: 'assigned'
 	version false
 	jobs cascade: "all-delete-orphan"
-	company cascade: "all"
+	company cascade: "none"
 	company column: 'company_id'
     }
        

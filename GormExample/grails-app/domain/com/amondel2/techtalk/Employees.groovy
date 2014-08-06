@@ -20,6 +20,7 @@ class Employees implements Serializable  {
 	boss nullable:true,blank:false
 	slaryRate nullable:true,blank:true,inList:['Yearly','Hourly']
 	id display:false
+	job nullable:true
     }
 
 

@@ -23,5 +23,16 @@ class EmployeeService extends BaseService {
 	super.update(params,j,"employees")
     }
     
+    def save(params) {
+	def builder = new JSONBuilder()
+	def str = params.name?.split(' ')
+	JSON j = builder.build {
+	    firstName = str[0]
+	    lastName = str[1]
+	    parentId =  params.parentId
+	}
+	super.save(j,"employees")
+    }
+    
     
 }

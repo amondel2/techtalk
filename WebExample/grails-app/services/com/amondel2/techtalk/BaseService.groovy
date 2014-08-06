@@ -1,9 +1,10 @@
 package com.amondel2.techtalk
 
+import java.util.ArrayList;
+
 import grails.converters.JSON
 import grails.web.JSONBuilder
 import grails.plugins.rest.client.RestBuilder
-
 import static grails.async.Promises.*
 import grails.async.*
 
@@ -18,9 +19,9 @@ class BaseService {
 	     json j
 	 }
     }
-    
+        
     def save(j,controller){
-	def appURL = grailsApplication.config.app.url + "/" + controller
+	def appURL = grailsApplication.config.app.url + "/" + controller  + "/"
 	return rest.post(appURL) {
 	     contentType "application/json"
 	     json j

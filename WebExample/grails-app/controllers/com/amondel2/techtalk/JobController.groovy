@@ -25,4 +25,16 @@ class JobController {
 	jobService.deleteQuertStr("/jobs/" + params?.id)
 	render(contentType:"text/json"){["message":"Success"]}
     }
+    
+    def save() {
+	def rtn = jobService.save(request.JSON)
+	def status = rtn?.getStatus()
+	def result = "FAILURE"
+	if(status == 200 || status == 201) {
+	    result = "Success"
+	}
+	def body = rtn?.json
+	
+	render(contentType:"text/json"){["message":result,results:body,childType: 'employee']}
+    }
 }

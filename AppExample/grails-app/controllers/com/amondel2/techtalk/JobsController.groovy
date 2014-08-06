@@ -13,4 +13,12 @@ class JobsController extends RestfulController {
 	def parent() {  
 	   respond  Jobs.findAllByOrganization(Organization.findAllById(params?.id))
 	}
+	
+	@Override
+	protected Jobs createResource() {
+	    def r =  request.JSON
+	    Jobs instance = new Jobs(r)
+	    instance.id = r.id
+	    instance
+	}
 }

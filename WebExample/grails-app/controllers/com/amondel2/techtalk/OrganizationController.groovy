@@ -25,6 +25,13 @@ class OrganizationController {
     
     def save() {
 	def rtn = organizationService.save(request.JSON)
-	render(contentType:"text/json"){["message":"Success"]}
+	def status = rtn?.getStatus()
+	def result = "FAILURE"
+	if(status == 200 || status == 201) {
+	    result = "Success"
+	}
+	def body = rtn?.json
+	
+	render(contentType:"text/json"){["message":result,results:body,childType: 'job']}
     }
 }

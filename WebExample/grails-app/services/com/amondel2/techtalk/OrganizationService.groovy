@@ -22,7 +22,12 @@ class OrganizationService extends BaseService {
     }
     
     def save(params) {
-	super.save(params,"organization")
+	def builder = new JSONBuilder()
+	JSON j = builder.build {
+	    name = params.name
+	    parentId =  params.parentId
+	}
+	super.save(j,"organization")
     }
    
 }

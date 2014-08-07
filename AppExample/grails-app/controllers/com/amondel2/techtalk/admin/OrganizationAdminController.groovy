@@ -4,19 +4,22 @@ import grails.rest.RestfulController;
 import grails.rest.*;
 import static org.springframework.http.HttpStatus.*
 import static org.springframework.http.HttpMethod.*
-import com.amondel2.techtalk.Employees
+import com.amondel2.techtalk.Organization
 
-class EmployeesAdminController extends RestfulController  {
+class OrganizationAdminController extends RestfulController  {
     static responseFormats = ['html']
-    def baseService
-     static scaffold = Employees
-     EmployeesAdminController() {
-	 super(Employees)
+    
+     static scaffold = Organization
+    
+     def baseService
+      
+     OrganizationAdminController() {
+	 super(Organization)
      }
      
      @Override
-     protected Employees createResource() {
-	 Employees instance = new Employees()
+     protected Organization createResource() {
+	 Organization instance = new Organization()
 	 bindData instance, getObjectToBind()
 	 try{
 	     if( instance.hasProperty('id') && ( instance.id == null ||  instance.id == '' ||  instance.id.trim().size() == 0)) {

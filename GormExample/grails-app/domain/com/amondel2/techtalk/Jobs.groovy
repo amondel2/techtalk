@@ -4,39 +4,39 @@ import groovy.transform.EqualsAndHashCode
 import grails.rest.*
 
 
-@EqualsAndHashCode
+@EqualsAndHashCode(includes=['id','name','organization'])
 @Resource(uri='/jobs', formats=['json', 'xml'])
 class Jobs {
 
     static constraints = {
-		name unique: true
-		techTalk nullable:true,blank:false
-		id display:false
+	name unique: true
+	organization nullable:true,blank:false
+	id display:false
     }
-	
-	public boolean equals(java.lang.Object other) {
-		if (other == null) return false
-		else if (this.is(other)) return true
-		else if (!(other instanceof Jobs)) return false
-		else if (id != other.id) return false
-		else if (name != other.name) return false
-		return true
-	}
-	
-	static mapping = {
-		table "Jobs"
-		techTalk column: 'tech_talk_id'
-		id generator: 'assigned'
-		version false
-		techTalk cascade: "all"
 
-	}
-	
-	static belongsTo = [techTalk:TechTalk]
-	
-		String name
-		String id
-		TechTalk techTalk
-	
-	
+    static mapping = {
+	organaization column: 'organaization_id'
+	table "Jobs"
+	id generator: 'assigned'
+	version false
+	organaization cascade: "all"
+	employees cascade: "all-delete-orphan"
+    }
+
+    public String toString(){
+	return this.name
+    }
+
+    static hasMany = [employees:Employees]
+
+    static belongsTo = [organization:Organization]
+
+
+    String name
+    String id
+    Organization organization
+
+
+
+
 }

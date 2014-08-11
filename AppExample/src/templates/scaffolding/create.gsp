@@ -25,7 +25,7 @@
 				</g:eachError>
 			</ul>
 			</g:hasErrors>
-			<g:form url="[resource:${propertyName}, action:'save']" <%= multiPart ? ' enctype="multipart/form-data"' : '' %>>
+			<g:form url='[controller:"\${entityName}Admin",action:"save"]' <%= multiPart ? ' enctype="multipart/form-data"' : '' %>>
 				<fieldset class="form">
 					<g:render template="form"/>
 				</fieldset>

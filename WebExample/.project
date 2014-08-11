@@ -26,7 +26,7 @@
 		<link>
 			<name>.link_to_grails_plugins</name>
 			<type>2</type>
-			<location>/Users/rkeller/git/techtalk/WebExample/target/work/plugins</location>
+			<location>G:/workspace2/techtalk/WebExample/target/work/plugins</location>
 		</link>
 	</linkedResources>
 </projectDescription>

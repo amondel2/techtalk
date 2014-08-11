@@ -3,8 +3,8 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 grails.project.work.dir = "target/work"
-grails.project.target.level = 1.6
-grails.project.source.level = 1.6
+grails.project.target.level = 1.7
+grails.project.source.level = 1.7
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 grails.project.fork = [
@@ -23,6 +23,8 @@ grails.project.fork = [
 
 def gebVersion = "0.9.3"
 def seleniumVersion = "2.42.2"
+
+grails.plugin.location.'GormExample' = "../GormExample"
 
 grails.project.dependency.resolver = "maven" // or ivy
 grails.project.dependency.resolution = {
@@ -69,10 +71,10 @@ grails.project.dependency.resolution = {
         // plugins for the compile step
         compile ":scaffolding:2.1.2"
         compile ':cache:1.1.7'
-        compile ":asset-pipeline:1.8.11"
+        compile ":asset-pipeline:1.9.6"
 
         // plugins needed at runtime but not for compilation
-        runtime ":hibernate4:4.3.5.4" // or ":hibernate:3.6.10.16"
+        runtime ":hibernate4:4.3.5.5" // or ":hibernate:3.6.10.16"
         runtime ":database-migration:1.4.0"
         runtime ":jquery:1.11.1"
 

@@ -7,21 +7,21 @@
 import org.openqa.selenium.firefox.FirefoxDriver
 import org.openqa.selenium.chrome.ChromeDriver
 
-driver = { new ChromeDriver() }
+driver = { new FirefoxDriver() }
 
 environments {
  
- // run as “grails -Dgeb.env=chrome test-app”
+ // run as grails -Dgeb.env=chrome test-app -functional WebAppCRUDSpec
  // See: http://code.google.com/p/selenium/wiki/ChromeDriver
  chrome {
 	 //Get Chrome Drive from http://chromedriver.storage.googleapis.com/index.html
 	 //Then set driver here
 	 //-Dgeb.env=chrome test-app -functional GoogleSearchCRUDSpec
-	 System.setProperty('webdriver.chrome.driver', '/Users/Aaron/Downloads/chromedriver')
+	 System.setProperty('webdriver.chrome.driver', "C:\\chromedriver")
 	 driver = { new ChromeDriver() }
  }
  
- // run as “grails -Dgeb.env=firefox test-app -functional GoogleSearchCRUDSpec"
+ // run as grails -Dgeb.env=firefox test-app -functional GoogleSearchCRUDSpec"
  // See: http://code.google.com/p/selenium/wiki/FirefoxDriver
  firefox {
 	 driver = { new FirefoxDriver() }

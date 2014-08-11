@@ -4,7 +4,6 @@ class EmployeeController {
 
     def employeeService
 
-    def index() { }
 
     def parent() {
 

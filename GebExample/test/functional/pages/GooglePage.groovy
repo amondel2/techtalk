@@ -24,5 +24,4 @@ class GooglePage extends Page {
 			searchResult.size() > 0
 		}
 	}
-}
-	
+}	

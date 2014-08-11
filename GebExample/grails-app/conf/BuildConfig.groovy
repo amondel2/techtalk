@@ -3,8 +3,8 @@ grails.project.class.dir = "target/classes"
 grails.project.test.class.dir = "target/test-classes"
 grails.project.test.reports.dir = "target/test-reports"
 grails.project.work.dir = "target/work"
-grails.project.target.level = 1.6
-grails.project.source.level = 1.6
+grails.project.target.level = 1.7
+grails.project.source.level = 1.7
 //grails.project.war.file = "target/${appName}-${appVersion}.war"
 
 grails.project.fork = [
@@ -23,6 +23,8 @@ grails.project.fork = [
 
 def gebVersion = "0.9.3"
 def seleniumVersion = "2.42.2"
+
+grails.plugin.location.'GormExample' = "../GormExample"
 
 grails.project.dependency.resolver = "maven" // or ivy
 grails.project.dependency.resolution = {

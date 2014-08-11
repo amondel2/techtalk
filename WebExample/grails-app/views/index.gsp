@@ -2,7 +2,7 @@
 <html  lang="en">
 	<head>
 		<meta name="layout" content="main"/>
-		<title>Welcome to Grails</title>
+		<title>WebApp Example</title>
 	</head>
 	<body ng-app="myApp">
 		<div id="page-body" role="main" ng-controller="OrgController">

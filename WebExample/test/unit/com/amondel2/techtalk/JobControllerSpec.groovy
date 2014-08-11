@@ -3,7 +3,9 @@ package com.amondel2.techtalk
 import grails.converters.JSON
 import grails.plugins.rest.client.RestBuilder
 import grails.test.mixin.TestFor
+import spock.lang.Shared
 import spock.lang.Specification
+import com.amondel2.techtalk.ResponseClass
 
 import org.springframework.http.HttpMethod
 
@@ -27,36 +29,92 @@ import static org.springframework.test.web.client.response.MockRestResponseCreat
 /**
  * See the API for {@link grails.test.mixin.web.ControllerUnitTestMixin} for usage instructions
  */
+
+
 @TestFor(JobController)
 class JobControllerSpec extends Specification {
-    RestBuilder rest = new RestBuilder()
-    def url = "http://localhost"
-    MockRestServiceServer mockServer
     
-    
+    static respnseObj = new ResponseClass()
+   
     def setup() {
-	grailsApplication.config.app.url = url
-	mockServer = MockRestServiceServer.createServer(rest.restTemplate)
+
     }
 
     def cleanup() {
     }
 
+    void "test index"(){
+	when:
+	controller.index()
+	then:
+	response.redirectedUrl == '/job/list'
+    }
+
 
     void "test List Call"() {
 	given:
-	mockServer.expect(requestTo(url + "/jobs"))
-		.andExpect(method(HttpMethod.GET))
-		.andExpect(header(HttpHeaders.ACCEPT, "application/json"))
-		.andRespond(withSuccess('{"burt":"rendols"}', MediaType.APPLICATION_JSON))
-	controller.rest = rest
-	
+	def mockJobService = mockFor(JobService)
+	mockJobService.demand.queryGet{def arg1 -> ['json':['name':'log']]}
+	controller.jobService = mockJobService.createMock()
 	when:
-	def testr = controller.list()
+	controller.list()
 	then:
-	mockServer.verify()
-	response.text != null
-	def t = new JsonSlurper().parseText(response.text)
-	t.burt == 'rendols'
+	response.json.name == 'log'
+    }
+    
+    void "test parent Call"() {
+	given:
+	def mockJobService = mockFor(JobService)
+	mockJobService.demand.queryGet{def arg1 -> ['json':['name':'log']]}
+	mockJobService.demand.transformResultForJtree{def arg1 -> ['name':'log']}
+	controller.params.id = "123231"
+	controller.jobService = mockJobService.createMock()
+	when:
+	controller.parent()
+	then:
+	response.json.name == 'log'
+    }
+    
+    void "test delete Call"() {
+	given:
+	def mockJobService = mockFor(JobService)
+	mockJobService.demand.deleteQuertStr{def arg1 -> ['json':['name':'log']]}
+	controller.params.id = "123231"
+	controller.jobService = mockJobService.createMock()
+
+	when:
+	controller.delete()
+	then:
+	response.json.message == 'Success'
+    }
+    
+    void "test update Call"() {
+	given:
+	def mockJobService = mockFor(JobService)
+	mockJobService.demand.update{def arg1 -> ['json':['name':'log']]}
+	controller.params.id = "123231"
+	controller.jobService = mockJobService.createMock()
+	when:
+	controller.update()
+	then:
+	response.json.message == 'Success'
+    }
+    
+    void "test save Call"() {
+	given:
+	def mockJobService = mockFor(JobService)
+	mockJobService.demand.save{def arg1 -> returnobj}
+	controller.params.id = "123231"
+	controller.jobService = mockJobService.createMock()
+	when:
+	controller.save()
+	then:
+	response.json.message == resultText
+	where:
+	returnobj		|	resultText
+	respnseObj.successText	|	'Success'
+	respnseObj.successText2	|	'Success'
+	respnseObj.failureText	|	'FAILURE'
+	respnseObj.nullStatus	|	'FAILURE'
     }
 }

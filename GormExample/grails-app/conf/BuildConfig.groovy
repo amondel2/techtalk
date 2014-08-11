@@ -37,6 +37,8 @@ grails.project.dependency.resolution = {
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
         // runtime 'mysql:mysql-connector-java:5.1.27'
+	test "org.grails:grails-datastore-test-support:1.0.1-grails-2.4"
+	test "org.spockframework:spock-grails-support:0.7-groovy-2.0"
     }
 
     plugins {
@@ -44,5 +46,6 @@ grails.project.dependency.resolution = {
               ":rest-client-builder:2.0.3") {
             export = false
         }
+	      test 	":code-coverage:2.0.3-1"
     }
 }

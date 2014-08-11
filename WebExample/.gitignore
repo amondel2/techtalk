@@ -1,4 +1,5 @@
 /.settings/
 /target/
 /.classpath
+/bin
 /cobertura.ser

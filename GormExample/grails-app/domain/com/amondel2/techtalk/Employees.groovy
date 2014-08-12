@@ -11,15 +11,14 @@ class Employees implements Serializable  {
 	firstName nullable:false,blank:false,unique:['lastName']
 	lastName nullable:false,blank:false
 	gender nullable:false,blank:false,inList:['Male','Female']
-	salary nullable:true,blank:true,validation: { val, obj ->
-	    def v = val.trim()
-	    if(v && v.size() > 0 && obj.slaryRate?.trim().size() == 0) {
+	salary nullable:true,blank:true,validator: { val, obj ->
+	    if(val && val > 0 && (obj.slaryRate?.trim()?.size() == 0 || !obj.slaryRate)) {
 		return ['salaryRateMissing']
 	    }
 	}
 	boss nullable:true,blank:false
 	slaryRate nullable:true,blank:true,inList:['Yearly','Hourly']
-	id display:false
+	id nullable:false,blank:false,unique:true,display:false
 	job nullable:true
     }
 

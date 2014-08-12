@@ -9,7 +9,7 @@ class Company implements Serializable  {
 
     static constraints = {
 	name nullable:false,blank:false,unique:true
-	id display:false
+	id   nullable:false,blank:false,unique:true,display:false
     }
 
     static mapping = {

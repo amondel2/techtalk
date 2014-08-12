@@ -6,7 +6,6 @@ class EmployeeController {
 
 
     def parent() {
-
 	def  resp = employeeService.queryGet("/employees/parent/" + params.id)
 	render(contentType:"text/json"){employeeService.transformResultForJtree(resp.json)}
     }

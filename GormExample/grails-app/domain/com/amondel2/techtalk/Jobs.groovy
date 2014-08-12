@@ -9,9 +9,9 @@ import grails.rest.*
 class Jobs {
 
     static constraints = {
-	name unique: true
+	name unique: true,nullable:false,blank:false
 	organization nullable:true,blank:false
-	id display:false
+	id nullable:false,blank:false,unique:true,display:false
     }
 
     static mapping = {

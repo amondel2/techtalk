@@ -9,9 +9,9 @@ import grails.rest.*
 class Organization implements Serializable {
      
     static constraints = {
-	name nullable:false,blank:false,unique:['company']
+	name nullable:false,blank:false,unique:true
 	company nullable:false,blank:false
-	id display:false
+	id nullable:false,blank:false,unique:true,display:false
     }
 
     static mapping = {

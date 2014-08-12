@@ -1,8 +1,8 @@
 package com.amondel2.techtalk.admin
 import com.amondel2.techtalk.Company
 
-import grails.rest.RestfulController
 import grails.rest.*;
+import grails.transaction.Transactional;
 import static org.springframework.http.HttpStatus.*
 import static org.springframework.http.HttpMethod.*
 
@@ -17,16 +17,28 @@ class CompanyAdminController extends RestfulController {
     }
     
     @Override
-    protected Company createResource() {
-	Company instance = new Company()
-	bindData instance, getObjectToBind()
-	try{
-	    if( instance.hasProperty('id') && ( instance.id == null ||  instance.id == '' ||  instance.id.trim().size() == 0)) {
-		instance.id = baseService.generateGuid()
-	    }
-	} catch (Exception e) {
-
+    def update() {
+	if(handleReadOnly()) {
+	    return
 	}
-	instance
+
+	Company instance = queryForResource(params.id)
+	if (instance == null) {
+	    notFound()
+	    return
+	}
+
+	instance.properties = getObjectToBind()
+
+	if (instance.hasErrors()) {
+	    respond instance.errors, view:'edit' // STATUS CODE 422
+	    return
+	}
+
+	instance.save flush:true
+	redirect(controller:controllerName, action: 'show',id: instance.id)
     }
+    
+    
+    
 }

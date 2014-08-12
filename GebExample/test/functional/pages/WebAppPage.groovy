@@ -32,7 +32,7 @@ class WebAppPage extends Page {
     void openJobs() {
 	organizationButtons[0].click()
 	waitFor{
-	    jobItemsFirst.size() > 1
+	    jobItemsFirst.size() > 0
 	}
 
     }
@@ -40,7 +40,7 @@ class WebAppPage extends Page {
     void openEmployees() {
 	jobItemsButtons[0].click()
 	waitFor{
-	    employeeItems.size() > 1
+	    employeeItems.size() > 0
 	}
     }
 
@@ -49,15 +49,11 @@ class WebAppPage extends Page {
 	println "company name " + this.orginalCompanyName
 	companyButton.click()
 	waitFor{
-	    organizationItems.size() > 1
+	    organizationItems.size() > 0
 	}
 
     }
     
-    void origName() {
-	this.rename(this.orginalCompanyName)
-    }
-
     void rename(String newName) {
 	companyRightClick.jquery.contextmenu()
 	waitFor{
@@ -67,5 +63,8 @@ class WebAppPage extends Page {
 	$("span.jstree-clicked input").value newName
     	//need a blur
 	$("span.jstree-clicked input").jquery.blur()
+	waitFor{
+	    pageHeading.text() == "Welcome to " + newName
+	}
     }
 }

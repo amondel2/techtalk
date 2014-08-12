@@ -23,14 +23,14 @@ class WebAppCRUDSpec  extends GebReportingSpec {
 	when:
 	openJobs()
 	then:
-	jobItemsFirst.size() > 1
+	jobItemsFirst.size() > 0
     }
 
     def "open Employees"() {
 	when:
 	openEmployees()
 	then:
-	employeeItems.size() > 1
+	employeeItems.size() > 0
     }
 
     def "remane Company Test"() {
@@ -45,11 +45,12 @@ class WebAppCRUDSpec  extends GebReportingSpec {
     }
 
     def "put orginal name back"() {
-
+	given:
+	def newName = getOrginalCompanyName()
 	when:
-	println "cleaning up"
-	origName()
+	rename(newName)
 	then:
-	pageHeading.text() == "Welcome to " + getOrginalCompanyName()
+	company.text().trim().startsWith(newName) == true
+	pageHeading.text() == "Welcome to " + newName
     }
 }

@@ -22,7 +22,6 @@ grails.project.fork = [
 ]
 
 grails.plugin.location.'GormExample' = "../GormExample"
-//grails.plugin.location.'notaviable-Example' = "G:\\workspace2\\notaviable-Example"
 
 grails.project.dependency.resolver = "maven" // or ivy
 grails.project.dependency.resolution = {

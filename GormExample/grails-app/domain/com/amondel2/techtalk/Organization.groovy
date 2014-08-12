@@ -7,7 +7,9 @@ import grails.rest.*
 @EqualsAndHashCode(includes=['id'])
 @Resource(uri='/organization', formats=['json', 'xml'])
 class Organization implements Serializable {
-     
+    
+    private static final serialVersionUID = 1L
+    
     static constraints = {
 	name nullable:false,blank:false,unique:true
 	company nullable:false,blank:false

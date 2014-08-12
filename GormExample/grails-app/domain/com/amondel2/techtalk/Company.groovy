@@ -6,6 +6,8 @@ import grails.rest.*
 @EqualsAndHashCode(includes=['id','name'])
 @Resource(uri='/company', formats=['json', 'xml'])
 class Company implements Serializable  {
+    
+    private static final serialVersionUID = 1L
 
     static constraints = {
 	name nullable:false,blank:false,unique:true

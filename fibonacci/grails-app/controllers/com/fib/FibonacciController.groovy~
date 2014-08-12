@@ -1,0 +1,13 @@
+package com.fib
+
+import grails.converters.JSON
+
+class FibonacciController {
+
+    def fibonacciService
+
+    def index() { 
+        def fibNumber = params.id as Integer
+        render fibonacciService.fib(fibNumber) as JSON
+    }
+}

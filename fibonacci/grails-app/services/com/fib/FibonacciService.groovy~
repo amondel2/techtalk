@@ -1,0 +1,21 @@
+package com.fib
+
+import grails.transaction.Transactional
+
+@Transactional
+class FibonacciService {
+
+    def fib(index) {
+            def start = System.currentTimeMillis()  
+            def dynamic = FibonacciGroovy.fibDynamic(index)
+            def now = System.currentTimeMillis()
+            def dynamicElapsed = now - start
+            start = System.currentTimeMillis()  
+            def static = FibonacciGroovy.fibStatic(index)
+            now = System.currentTimeMillis() 
+            def staticElapsed = now - start
+	
+	return ['dynamic': ['result':dynamic,'time':dynamicElapsed],
+                'static': ['result':static,'time':staticElapsed] ]
+    }
+}

@@ -127,21 +127,13 @@ class BootStrap {
 	generateId(new Employees(firstName:"Dick",lastName:"Cheney",gender:"Male",job:j11,boss:e4),false,[j11,e4],["Employees","DirectReports"])
 	
 	e2.save(flush:true)
-//	j1.save(flush:true)
-//	j2.save(flush:true)
-//	j3.save(flush:true)
-//	j4.save(flush:true)
+
 		
 	e3.save(flush:true)
-//	j5.save(flush:true)
-//	j6.save(flush:true)
-//	j7.save(flush:true)
-//	j8.save(flush:true)
+
 	
 	e4.save(flush:true)
-//	j9.save(flush:true)
-//	j10.save(flush:true)
-//	j11.save(flush:true)
+
 
     }
     def destroy = {

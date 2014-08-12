@@ -43,21 +43,13 @@ class JobControllerSpec extends Specification {
     def cleanup() {
     }
 
-    void "test index"(){
-	when:
-	controller.index()
-	then:
-	response.redirectedUrl == '/job/list'
-    }
-
-
-    void "test List Call"() {
+    void "test index Call"() {
 	given:
 	def mockJobService = mockFor(JobService)
 	mockJobService.demand.queryGet{def arg1 -> ['json':['name':'log']]}
 	controller.jobService = mockJobService.createMock()
 	when:
-	controller.list()
+	controller.index()
 	then:
 	response.json.name == 'log'
     }

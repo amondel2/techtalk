@@ -17,7 +17,7 @@ environments {
 	 //Get Chrome Drive from http://chromedriver.storage.googleapis.com/index.html
 	 //Then set driver here
 	 //-Dgeb.env=chrome test-app -functional GoogleSearchCRUDSpec
-	 System.setProperty('webdriver.chrome.driver', "C:\\chromedriver")
+	 System.setProperty('webdriver.chrome.driver', "C:\\chromedriver.exe")
 	 driver = { new ChromeDriver() }
  }
  

@@ -3,8 +3,7 @@ package com.amondel2.techtalk
 class JobController {
     def jobService
 
-    def index() {redirect(action: "list")}
-    def list(){
+    def index(){
 	def  resp = jobService.queryGet("/jobs")
 	render(contentType:"text/json"){resp.json}
     }

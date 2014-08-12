@@ -3,10 +3,12 @@ package com.amondel2.techtalk
 import groovy.transform.EqualsAndHashCode
 import grails.rest.*
 
-@EqualsAndHashCode(includes=['id','firstName','lastName'])
+@EqualsAndHashCode(includes=['id'])
 @Resource(uri='/employees', formats=['json', 'xml'])
 class Employees implements Serializable  {
 
+    private static final serialVersionUID = 1L
+    
     static constraints = {
 	firstName nullable:false,blank:false,unique:['lastName']
 	lastName nullable:false,blank:false

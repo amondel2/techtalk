@@ -4,10 +4,12 @@ import groovy.transform.EqualsAndHashCode
 import grails.rest.*
 
 
-@EqualsAndHashCode(includes=['id','name','organization'])
+@EqualsAndHashCode(includes=['id'])
 @Resource(uri='/jobs', formats=['json', 'xml'])
 class Jobs {
 
+    private static final serialVersionUID = 1L
+    
     static constraints = {
 	name unique: true,nullable:false,blank:false
 	organization nullable:true,blank:false

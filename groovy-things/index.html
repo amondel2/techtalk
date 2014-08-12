@@ -1,0 +1,1159 @@
+<!doctype html>
+<html lang="en" ng-app>
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Groovy Things: Groovy, Grails, Spock, Geb</title>
+
+		<meta name="description" content="A quick overview, code samples, and links to documentation about AngularJS">
+		<meta name="author" content="Justin Copenhaver">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/sky.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+		<style>
+		    .my-class {
+		    color: red;
+		    }
+		</style>	
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				<section>
+					<h1>Groovy Things</h1>
+					<h3>Groovy, Grails, Spock, Geb</h3>
+					<p><small>Justin Copenhaver</small>
+                                           <small>Aaron Mondelblatt</small></p>
+				</section>
+
+				<section>
+					<h2>What is Groovy?</h2>
+					<ul>
+						<li>It is a dynamic language with features similar to those of Python, Ruby, and Perl</li>
+						<li>It is dynamically compiled to Java Virtual Machine (JVM) bytecode</li>
+						<li>It interoperates with other Java code and libraries.</li>
+						<li>It uses a Java-like curly-bracket syntax</li>
+					</ul>
+				</section>
+				<section>
+					<section>
+						<h2>Groovy Features</h2>
+						<ul>
+							<li>Groovy Beans</li>
+							<li>Meta Class Programming</li>
+							<li>Functional Programming (Closures)</li>
+							<li>XML and JSON Processing</li>
+							<li>String Transformation</li>
+							<li>Abstract Syntax Tree (AST) Transformations</li>
+							<li>GStrings</li>
+                                                        <li>Static Compilation</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+
+					<h2>Groovy Beans</h2>
+					<p>Groovy implicitly generates accessor and mutator methods</p>
+					<pre><code class="xml" data-trim>
+class PersonBean {
+String firstName
+String lastName
+}
+
+def myBean = new PersonBean()
+myBean.setFirstName('Bob')
+assert myBean.getFirstName() == 'Bob'
+
+myBean.lastName = 'Roberts'
+assert myBean.lastName == 'Roberts'
+					</code></pre>
+					<span>setFirstName(String firstName) and getFirstName() show implicit generation of bean methods. The last two lines show how data members can be accessed directly like properties.</span>
+				</section>
+				<section>
+					<h2>Meta Class Programming</h2>
+					<p>Groovy offers support for metaprogramming through different language concepts. We will cover using ExpandoMetaClass:</p>
+					<pre><code class="xml" data-trim>
+Number.metaClass {
+squared = { Math.pow(delegate,2) }
+}
+
+assert 3.squared() == 9
+assert 9.squared() == 81
+					</code></pre>
+					<span>This example shows the ability to extend a class (including existing classes) to have additional features available at runtime.</span>
+				</section>
+				<section>
+					<h2>Functional Programming (Closures)</h2>
+					<p>Groovy allows you to write closures, which act as method pointers, and are enabled to be accessed at a later time.</p>
+					<pre><code class="xml" data-trim>
+def colors = ['red','blue','yellow','green','brown','orange','purple']
+
+def bColors = colors.findAll { it.startsWith('b') }
+
+assert bColors = ['blue','brown']
+					</code></pre>
+				</section>
+				<section>
+					<section>
+						<h2>XML and JSON Processing</h2>
+						<p>Groovy has convenience classes to read and write both XML and JSON, making this a trivial process in contrast to Java.</p>
+						<pre><code class="xml" data-trim>
+&lt;languages&gt;
+  &lt;language year="1995"&gt;
+    &lt;name&gt;java&lt;/name&gt;
+    &lt;paradigm&gt;Object oriented&lt;/paradigm&gt;
+    &lt;typing&gt;Static&lt;/typing&gt;
+  &lt;/language&gt;
+  &lt;language year="1995"&gt;
+    &lt;name&gt;ruby&lt;/name&gt;
+    &lt;paradigm&gt;Object oriented, Functional&lt;/paradigm&gt;
+    &lt;typing&gt;Dynamic, duck typing&lt;/typing&gt;
+  &lt;/language&gt;  
+  &lt;language year="2003"&gt;
+    &lt;name&gt;groovy&lt;/name&gt;
+    &lt;paradigm&gt;Object oriented, Functional&lt;/paradigm&gt;
+    &lt;typing&gt;Dynamic, Static, Duck typing&lt;/typing&gt;
+  &lt;/language&gt;
+&lt;/languages&gt;
+						</code></pre>
+					</section>
+					<section>
+<span>This XML can be represented using the following Groovy code:</span>
+						<pre><code class="xml" data-trim>
+def writer = new StringWriter()
+def builder = new groovy.xml.MarkupBuilder(writer)
+builder.languages {
+  language(year: 1995) {
+    name "java"
+    paradigm "object oriented"
+    typing "static"
+  }
+  language (year: 1995) {
+    name "ruby"
+    paradigm "object oriented, functional"
+    typing "dynamic, duck typing"
+  }
+  language (year: 2003) {
+    name "groovy"
+    paradigm "object oriented, functional"
+    typing "dynamic, static, duck typing"
+  }
+}
+						</code></pre>
+					</section>
+					<section>
+<span>Which can be parsed using XmlSlurper:</span>
+						<pre><code class="xml" data-trim>
+def languages = new XmlSlurper().parseText writer.toString()
+ 
+def functional = languages.language.findAll { it.typing =~ "duck" }
+assert functional.collect { it.name } == ["ruby", "groovy"]						</code></pre>
+					</section>
+				</section>
+				<section>
+					<h2>AST Transformation</h2>
+					<p>AST Transformations provides Groovy with improved compile-time metaprogramming capabilities allowing powerful flexibility at the language level, without a runtime performance penalty.</p>
+					<pre><code class="xml" data-trim>
+class Photo {
+    int width
+    int height
+}
+
+class PhotoSelection {
+    @Delegate Photo photo
+
+    String title
+    String caption
+}
+
+def photo = new Photo(width: 640, height: 480)
+def selection = new PhotoSelection(title: "Groovy", caption: "Groovy", photo: photo)
+
+assert selection.title == "Groovy"
+assert selection.caption == "Groovy"
+
+assert selection.width == 640
+assert selection.height == 480
+					</code></pre>
+					<span>This is an example of a commonly used AST Transformation. In the example, the Photo is a Delegate, and the properties of the Photo are available on the PhotoSelection.</span>
+				</section>
+				
+			</section>
+
+
+				<section>
+					<h2>GStrings</h2>
+					
+					<p>GStrings are declared inside double-quotes and can contain arbitrary expressions inside of them using the <i>${expression}</i> syntax. Any valid Groovy expression can be enclosed in the ${...} including method calls.</p><br/>
+				
+					<pre><code class="xml" data-trim>
+class Duck {
+    def name() { 'duck' }
+    def speak() { 'quack' }
+}
+ 
+class Cow {
+    def name() { 'cow' }
+    def speak() { 'moo' }
+}
+
+// hooray for duck typing
+def rollCall(animal) {
+    "I am a ${animal.name()} and I ${animal.speak()}"
+}
+
+assert rollCall(new Duck()) == "I am a duck and I quack"
+assert rollCall(new Cow()) == "I am a cow and I moo"
+					</code></pre>	
+				</section>
+
+				<section>
+					<h2>Static Compilation</h2>
+					
+					<p>Methods or classes can be statically compiled in Groovy using the <code>@CompileStatic</code> annotation.</p>
+<ul>
+    <li>Enables static type checking/type safety (you need to worry about types)</li>
+    <li>Compiled for JVM; additional Groovy runtime hits avoided</li>
+</ul>
+				
+					<pre><code class="xml" data-trim>
+static BigInteger fib( Integer index ) {
+    BigInteger result = 0
+    BigInteger prev = 1
+    BigInteger current = 0
+    index.times { 
+        result = current + prev
+        prev = current
+        current = result
+    }
+    result
+}
+					</code></pre>	
+				</section>
+
+				<section>
+					<h2>How do I Groovy?</h2>
+					
+					<p>So if you're new to groovy, here is how you can get yourself up to speed:</p><br/>
+					<ul>
+						<li><a href="http://groovy.codehaus.org/Getting+Started+Guide">Getting Started with Groovy</a></li>
+						<li><a href="http://groovykoans.org">Groovy Koans: The Missing Groovy Tutorial</a></li>
+					</ul>
+
+				</section>
+
+				<section>
+					<h2>Groovy Things</h2>
+					
+					<p>Now that we've talked about Groovy Basics, let's look at some tools that use Groovy:</p><br/>
+					<ul>
+						<li><a href="http://grails.org">Grails</a></li>
+						<li><a href="http://code.google.com/p/spock/">Spock</a></li>
+						<li><a href="http://www.gebish.org/">Geb</a></li>
+					</ul>
+
+				</section>
+<section>
+    <h1>Grails</h1>
+<a href="http://grails.org">http://grails.org</a>
+</section>
+				<section>
+					<h2>What is Grails?</h2>
+					
+					<p>Grails is an Open Source, full stack, web application framework for the JVM.</p><br/>
+					<p>Grails is powered by Groovy!</p><br/>
+					<p>Grails stresses convention over configuration for highest productivity.</p><br/>
+					<p>Grails is <b>not</b> referred to as "Groovy on Grails". It is not Ruby on Rails, just plain old Grails!</p><br/>
+				</section>
+
+				<section>
+					<h2>Why Grails?</h2>
+					<ul>
+						<li>Convention over configuration</li>
+						<li>JVM Compatibility</li>
+						<li>Active Developer Community</li>
+						<li>GORM Goodness</li>
+						<li>Resource Management</li>
+                                                <li>REST Support</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+						<h2>Convention over Configuration</h2>
+						<pre>
+%PROJECT_HOME%
+    + grails-app
+       + conf	// location of grails configuration 
+           + hibernate	// optional hibernate config
+           + spring	// optional spring config
+       + controllers 	// location of controllers
+       + domain 	// location of domain classes
+       + i18n 	// location of bundles for i18n
+       + services 	// location of services
+       + taglib	// location of tag libraries
+       + util	// location of utility classes 
+       + views	// location of views
+           + layouts	// location of common layouts
+   + lib		// jars included for deployment
+   + scripts	// groovy scripts
+   + src		
+       + groovy	// optional; location for additional Groovy source files
+       + java	// optional; location for Java files
+   + test	// generated test classes (unit, integration)
+   + web-app	// client resource files
+   	   + css			
+	   + js
+	   + images
+						</pre>
+					</section>
+					<section>
+						<h2>Convention over Configuration</h2>
+						<p>No more XML configurations!</p>
+						<pre><code class="xml" data-trim>
+class MyController {
+    // service injected via convention
+   def myInjectedService
+}
+						</code></pre>
+						<p>Never have to configure web.xml unless you wish to customize it</p><br/>
+						<p>Useful functionality available out of the box.. scaffolding</p><br/>
+						<p>Automatic creation of unit tests upon creation of Controllers, Services, Domains</p><br/>
+					</section>
+					
+				</section>
+				<section>
+					<h2>JVM Compatability</h2>
+					<p>Grails is a JVM compatible technology</p>
+					<ul>
+						<li>Existing java dependencies can be used</li>
+						<ul>
+							<li>BuildConfig.groovy dependency</li>
+							<li>jars autoload in libs folder</li>
+						</ul>
+						<li>JVM compatible (Java,Scala) code can be used</li>
+						<li>Existing build tools (Maven, Ant) supported</li>
+					</ul>
+				</section>
+
+				<section>
+					<h2>Active Developer Community</h2>
+					<ul>
+						<li>Enterprise support (Pivotal)</li>
+						<li>IDE support (Eclipse GGTS, IntelliJ Idea, NetBeans, etc)</li>
+						<li>Many <a href="https://grails.org/plugins/">plugins</a> available!</li>
+						<li>Active development by core Grails team (working towards 3.0 release)</li>
+					</ul>
+				</section>
+
+				<section>
+					<section>
+					<h2>GORM Goodness</h2>
+					<p>Grails Object Relational Model (GORM) is an ORM layer that provides metaclass methods for working with your domains.</p>
+					<ul>
+						<li>GORM uses Hibernate by default, but supports other Persistence Frameworks, such as JPA</li>
+						<li>CRUD operations supported via metaclass methods</li>
+						<li>extensions for validation, eventing, auto timestamping</li>
+						<li>GORM supports multiple data sources</li>
+						<li>NoSQL implementations of GORM available through Plugins</li>
+					</ul>
+					</section>
+					<section>
+						<h2>GORM Goodness</h2>
+						<pre><code class="xml" data-trim>
+class Person {
+    String firstName
+    String lastName
+}
+
+new Person(firstName:'Bob',lastName:'Roberts').save()
+assert Person.findByLastName('Roberts').firstName == 'Bob'
+						</code></pre>
+					</section>
+				</section>
+
+				<section>
+					<section>
+					<h2>Resource Management</h2>
+					<p>The Asset-Pipeline Plugin is used for managing and processing static assets in Grails applications.</p>
+					<ul>
+						<li>Functions include processing and minification of both CSS and JavaScript files</li>
+						<li>Capable of being extended to compile custom static assets, such as CoffeeScript</li>
+					</ul>
+					<p>Place your static assets in those directories and simply include them into your layouts:</p>
+						<pre><code class="xml" data-trim>
+grails-app/assets/javascript
+grails-app/assets/images
+grails-app/assets/stylesheets
+						</code></pre>
+					</section>
+					<section>
+						<h2>Resource Management</h2>
+						<p>The Asset-Pipeline Plugin provides tag libraries to include javascript and CSS into your GSP pages:</p>
+						<pre><code class="xml" data-trim>
+<head>
+	<asset:javascript src="application.js"/>
+	<asset:stylesheet href="application.css"/>
+</head>
+						</code></pre>
+					</section>
+				</section>
+				
+				<section>
+					<h2>REST Support</h2>
+					<p>Grails supports a RESTful architectural pattern for providing Domain classes as RESTful resources via annotation:</p>
+						<pre><code class="xml" data-trim>
+import grails.rest.*
+
+@Resource(uri='/people')
+class Person {
+    String firstName
+    String lastName
+}
+
+new Person(firstName:'Bob',lastName:'Roberts').save()
+
+// http://localhost:8080/myapp/people/1.json
+{"id":1,"firstName":"Bob","lastName":"Roberts"}
+						</code></pre>
+				</section>
+				<section>
+					<h2>Security</h2>
+					<p>Grails supports (through Plugins) methods to secure your application with various authentication/authorization/ACL mechanisms</p>
+					<ul>
+						<li>Spring Security Core + Extensions</li>
+						<li>Apache Shiro</li>
+					</ul>
+					<p>Securing endpoints via Annotation, Request Map, Config.groovy</p>
+					<p>Both plugins provide sensible defaults and in-depth guides for getting started</p>
+				</section>
+				<section>
+					<section>
+						<h2>Initialize your app</h2>
+		                                <p>BootStrap.groovy</p>
+		                                <ul>
+							<li>Create test data</li>
+							<li>Kick off processes</li>
+		                                        <li>Populate caches</li>
+						</ul>
+					<pre><code class="xml" data-trim>
+class BootStrap {
+
+    def init = { servletContext ->
+	// setup
+    }
+    def destroy = {
+	// teardown
+    }
+}
+					</code></pre>	
+					</section>
+					<section>
+						<h2>Initialize your app</h2>
+		                                <p>DataSource.groovy</p>
+		                                <ul>
+							<li>Define your data sources</li>
+							<li>Per environment (Dev,Prod,Test) or define your own</li>
+		                                        <li>Define multiple data sources</li>
+						</ul>
+					<pre><code class="xml" data-trim>
+environments {
+    development {
+        dataSource {
+            dbCreate = "create-drop" // one of 'create', 'create-drop', 'update', 'validate', ''
+            url = "jdbc:h2:mem:devDb;MVCC=TRUE;LOCK_TIMEOUT=10000;DB_CLOSE_ON_EXIT=FALSE"
+        }
+    }
+...
+}
+					</code></pre>	
+					</section>
+					<section>
+						<h2>Initialize your app</h2>
+		                                <p>BuildConfig.groovy</p>
+		                                <ul>
+							<li>Define your build/runtime dependencies</li>
+							<li>Define your repositories</li>
+						</ul>
+					<pre><code class="xml" data-trim>
+grails.project.dependency.resolver = "maven" // or ivy
+grails.project.dependency.resolution = {
+    // inherit Grails' default dependencies
+    inherits("global") {
+        // specify dependency exclusions here; for example, uncomment this to disable ehcache:
+        // excludes 'ehcache'
+    }
+    log "error" // log level of Ivy resolver, either 'error', 'warn', 'info', 'debug' or 'verbose'
+    checksums true // Whether to verify checksums on resolve
+    legacyResolve false // whether to do a secondary resolve on plugin installation, not advised and here for backwards compatibility
+
+    repositories {
+        inherits true // Whether to inherit repository definitions from plugins
+
+        grailsPlugins()
+        grailsHome()
+        mavenLocal()
+        grailsCentral()
+        mavenCentral()
+        // uncomment these (or add new ones) to enable remote dependency resolution from public Maven repositories
+        //mavenRepo "http://repository.codehaus.org"
+        //mavenRepo "http://download.java.net/maven/2/"
+        //mavenRepo "http://repository.jboss.com/maven2/"
+    }
+
+    dependencies {
+        // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
+        // runtime 'mysql:mysql-connector-java:5.1.29'
+        // runtime 'org.postgresql:postgresql:9.3-1101-jdbc41'
+        test "org.grails:grails-datastore-test-support:1.0-grails-2.4"
+    }
+
+    plugins {
+        // plugins for the build system only
+        build ":tomcat:7.0.54"
+
+        // plugins for the compile step
+        compile ":scaffolding:2.1.2"
+        compile ':cache:1.1.7'
+        compile ":asset-pipeline:1.8.11"
+
+        // plugins needed at runtime but not for compilation
+        runtime ":hibernate4:4.3.5.4" // or ":hibernate:3.6.10.16"
+        runtime ":database-migration:1.4.0"
+        runtime ":jquery:1.11.1"
+
+        // Uncomment these to enable additional asset-pipeline capabilities
+        //compile ":sass-asset-pipeline:1.7.4"
+        //compile ":less-asset-pipeline:1.7.0"
+        //compile ":coffee-asset-pipeline:1.7.0"
+        //compile ":handlebars-asset-pipeline:1.3.0.3"
+    }
+}
+					</code></pre>	
+					</section>
+					<section>
+						<h2>Initialize your app</h2>
+		                                <p>Config.groovy</p>
+		                                <ul>
+							<li>Configure your logging</li>
+							<li>Kitchen sink (misc configurations end up in here)</li>
+						</ul>
+					<pre><code class="xml" data-trim>
+// log4j configuration
+log4j.main = {
+    // Example of changing the log pattern for the default console appender:
+    //
+    //appenders {
+    //    console name:'stdout', layout:pattern(conversionPattern: '%c{2} %m%n')
+    //}
+
+    error  'org.codehaus.groovy.grails.web.servlet',        // controllers
+           'org.codehaus.groovy.grails.web.pages',          // GSP
+           'org.codehaus.groovy.grails.web.sitemesh',       // layouts
+           'org.codehaus.groovy.grails.web.mapping.filter', // URL mapping
+           'org.codehaus.groovy.grails.web.mapping',        // URL mapping
+           'org.codehaus.groovy.grails.commons',            // core / classloading
+           'org.codehaus.groovy.grails.plugins',            // plugins
+           'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
+           'org.springframework',
+           'org.hibernate',
+           'net.sf.ehcache.hibernate'
+}
+					</code></pre>	
+					</section>
+				</section>
+
+<section>
+    <h1>DEMO</h1>
+</section>
+
+<section>
+    <h1>Spock</h1>
+<a href="http://code.google.com/p/spock/">http://code.google.com/p/spock/</a>
+</section>
+
+<section>
+    <h2>What is Spock?</h2>
+    <p>Spock is a testing and specification framework for Java and Groovy applications</p>
+    <ul>
+        <li>beautiful and highly expressive specification language</li>
+        <li>Compatible with most IDEs, build tools, and continuous integration servers</li>
+    </ul>
+</section>
+
+<section>
+    <h2>Why use Spock?</h2>
+    <p>Because Groovy is awesome :)</p>
+    <p>Because Spock provides clean and concise output of failures</p>
+    <pre><code class="xml" data-trim>
+    Condition not satisfied:
+
+    max(a, b) == c
+    |   |  |  |  |
+    3   1  3  |  2
+              false
+    </code></pre>
+    <p>Because it reads well</p>
+    <pre><code class="xml" data-trim>
+    def "subscribers receive published events at least once"() {
+      when: publisher.send(event)
+      then: (1.._) * subscriber.receive(event)
+      where: event << ["started", "paused", "stopped"]
+    }
+    </code></pre>
+</section>
+
+<section>
+    <section>
+    <h2>Anatomy of a Spec</h2>
+    <p></p>
+    <pre><code class="xml" data-trim>
+import spock.lang.Specification
+
+class MyFirstSpec extends Specification {
+    
+    // fields
+    // fixture methods
+    // feature methods
+    // helper methods
+}
+    </code></pre>
+    </section>
+    <section>
+    <h2>Fields</h2>
+	<ul>
+	    <li>Initialized for each test</li>
+	    <li>Not shared between feature methods</li>
+	    <li><code>@Shared</code> annotation (single instance, for expensive resources)</li>
+	    <li><code>static</code> used only for constants</li>
+	</ul>
+    </section>
+    <section>
+    <h2>Fixture Methods</h2>
+        <ul>
+            <li>before or after a feature</li>
+            <li>before or after a spec</li>
+            <li>optional</li>
+        </ul>
+    <pre><code class="xml" data-trim>
+import spock.lang.Specification
+
+class MyFirstSpec extends Specification {
+    
+    // fields
+    // fixture methods
+    def setup() {}	// run before every feature method
+    def cleanup() {}	// run after every feature method
+    def setupSpec() {} 	// run before first feature method
+    def cleanupSpec() {} // run after last feature method
+    // feature methods
+    // helper methods
+}
+    </code></pre>
+    </section>
+    <section>
+    <h2>Feature Methods</h2>
+        <ul>
+            <li>setup the feature</li>
+            <li>provide stimulus to system</li>
+            <li>describe the response</li>
+            <li>cleanup</li>
+        </ul>
+    <pre><code class="xml" data-trim>
+import spock.lang.Specification
+
+class MyFirstSpec extends Specification {
+    
+    // fields
+    // fixture methods
+    // feature methods
+    def "pay sales tax on an item"() {
+        // blocks go here
+    }
+    // helper methods
+}
+    </code></pre>
+    </section>
+    <section>
+    <h2>Blocks</h2>
+        <table>
+            <tr><td>given:</td><td>preconditions, data fixtures</td></tr>
+            <tr><td>when:</td><td>actions that trigger some outcome</td></tr>
+            <tr><td>then:</td><td>makes assertions about outcome</td></tr>
+            <tr><td>expect:</td><td>alternative to when & then</td></tr>
+            <tr><td>where:</td><td>applies varied inputs</td></tr>
+            <tr><td>and:</td><td>sub-divides other blocks</td></tr>
+            <tr><td>setup:</td><td>alias for given</td></tr>
+            <tr><td>cleanup:</td><td>post-conditions, housekeeping</td></tr>
+        </table>
+        <br/>
+        <p>Common feature method blocks</p>
+        <ul>
+            <li>When/Then/Where</li>
+            <li>Given/When/Then</li>
+        </ul>
+    </section>
+
+    <section>
+    <h2>Helper Methods</h2>
+        <ul>
+            <li>used in blocks</li>
+            <li>either return a boolean or assert that something is true</li>
+        </ul>
+    </section>
+</section>
+
+<section>
+    <h2>A very simple example</h2>
+    <pre><code class="xml" data-trim>
+import spock.lang.Specification
+
+class Store {
+
+    public def checkout(Map items, double salesTax) {
+        def total = items.collect { key, val -> val * salesTax }
+	total // return
+    }
+
+}
+
+class PASalesTaxSpec extends Specification {
+    
+    // fields
+    public static final double PA_SALES_TAX = 0.06
+    // fixture methods
+    def setup() {}	// run before every feature method
+    def cleanup() {}	// run after every feature method
+    def setupSpec() {} 	// run before first feature method
+    def cleanupSpec() {} // run after last feature method
+    // feature methods
+    def "apply sales tax to item"() {
+        given:
+        def items = ['milk':2.00,'eggs':2.00,'cereal':3.00]
+        when:
+        def total = store.checkout(items, PA_SALES_TAX)
+        then:
+        assert total == 7.42
+    }
+    // helper methods
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Data driven Specification</h2>
+    <pre><code class="xml" data-trim>
+public static final double PA_SALES_TAX = 0.06
+public static final double NY_SALES_TAX = 0.08
+public static final double DE_SALES_TAX = 0
+
+def "data driven example of computing sales tax"() {
+    expect:
+    store.checkout(a,b) == c
+
+    where:
+    a << [['milk':2.00,'eggs':2.00,'cereal':3.00],
+          ['milk':2.00,'eggs':2.00,'cereal':3.00],
+          ['milk':2.00,'eggs':2.00,'cereal':3.00]]
+    b << [PA_SALES_TAX,NY_SALES_TAX,DE_SALES_TAX]
+    c << [7.42,7.56,7.00]
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Exceptions</h2>
+    <p>Sometimes you want to check if an exception is thrown. Spock can do that.</p>
+    <pre><code class="xml" data-trim>
+
+def "popping on an empty stack"() {
+    def stack = new Stack()
+
+    when:
+    stack.pop()
+
+    then:
+    thrown(EmptyStackException)
+}
+    </code></pre>
+</section>
+
+<section>
+    <h2>Expectations</h2>
+    <p>You can also check to see if something was called in the process of a test.</p>
+    <pre><code class="xml" data-trim>
+def "check if subscribers receive events"() {
+  def subscriber1 = Mock(Subscriber)
+  def subscriber2 = Mock(Subscriber)
+  def publisher = new Publisher()
+  publisher.add(subscriber1)
+  publisher.add(subscriber2)
+  
+  when:
+  publisher.fire("event")
+  
+  then: 
+  1 * subscriber1.receive("event")
+  1 * subscriber2.receive("event")
+}
+
+    </code></pre>
+</section>
+
+<section>
+    <h1>DEMO</h1>
+</section>
+
+<section>
+    <h1>Geb</h1>
+    <a href="http://www.gebish.org/">http://www.gebish.org/</a>
+</section>
+
+<section id="overview-1">
+<h2>What is Geb?</h2>
+<ul>
+<li>Browser Automation via <strong>Selenium Webdriver</strong> and a <strong>groovy DSL</strong></li>
+<li><strong>jQuery</strong> like and <strong>CSS</strong> content selection</li>
+<li>Supports <strong>Page Object Model</strong> pattern</li>
+<li>Reporting - screen shots, html scrapes, etc</li>
+</ul></li>
+</ul>
+</section>
+<section id="selenium---overview">
+<h2>Quick aside about Selenium</h2>
+<p>Popular Web Testing framework and tool set</p>
+<ul>
+<li>Components
+<ul>
+<li>Selenium IDE</li>
+<li>Selenese</li>
+<li>Selenium Client API</li>
+<li><strong>WebDriver</strong></li>
+<li><strong>Remote WebDriver</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="available-webdrivers">
+<h2>Available WebDrivers</h2>
+<ul>
+<li><em>Firefox</em> (this is the easiest to configure)</li>
+<li>IE</li>
+<li>HTMLUnit</li>
+<li>Chrome</li>
+<li>Safari</li>
+<li>Opera</li>
+<li>etc...</li>
+</ul>
+</section>
+<section id="the-page-object-model">
+	<section>
+	<h2>The Page Object Model</h2>
+	<p>Fundamental element of reuse, helps keep code maintainable.</p>
+	<p>Within your web app’s UI there are areas that your tests interact with. A Page Object simply models these as objects within the test code. This reduces the amount of duplicated code and means that if the UI changes, the fix need only be applied in one place.</p>
+	</section>
+	<section>
+	<h2>The Page Object Model</h2>
+	<p>PageObjects can be thought of as facing in two directions simultaneously. Facing towards the developer of a test, they represent the services offered by a particular page. Facing away from the developer, they should be the only thing that has a deep knowledge of the structure of the HTML of a page (or part of a page) It’s simplest to think of the methods on a Page Object as offering the “services” that a page offers rather than exposing the details and mechanics of the page. As an example, think of the inbox of any web-based email system. Amongst the services that it offers are typically the ability to compose a new email, to choose to read a single email, and to list the subject lines of the emails in the inbox. How these are implemented shouldn’t matter to the test.</p>
+	</section>
+</section>
+<section id="the-jquery-ish-navigator-api">
+<h2>The jquery-ish Navigator API</h2>
+<ul>
+<li>jQuery is good at selecting, targeting and traversing through and around content, so Geb used its model</li>
+<li>Content selection is done with the <strong>$</strong> function, which returns a <em>Navigator</em> object, which represents one or more selected element</li>
+</ul>
+<pre><code>// match all &#39;div&#39; elements on the page
+$(&quot;div&quot;)
+
+// match the first &#39;div&#39; element on the page
+$(&quot;div&quot;, 0)
+
+// match all &#39;div&#39; elements with a title attribute value of &#39;section&#39;
+$(&quot;div&quot;, title: &quot;section&quot;)
+
+// match the first &#39;div&#39; element with a title attribute value of &#39;section&#39;
+$(&quot;div&quot;, 0, title: &quot;section&quot;)
+
+// match all &#39;div&#39; elements who have the class &#39;main&#39;
+$(&quot;div.main&quot;)
+
+// match the first &#39;div&#39; element with the class &#39;main&#39;
+$(&quot;div.main&quot;, 0)</code></pre>
+</section>
+<section id="introductory-example---inline-scripting">
+<h2>Inline Scripting</h2>
+<p>No page objects, no predefined content</p>
+<pre><code>import geb.Browser
+
+Browser.drive {
+    go &quot;http://google.com/ncr&quot;
+
+    // make sure we actually got to the page
+    assert title == &quot;Google&quot;
+
+    // enter wikipedia into the search field
+    $(&quot;input&quot;, name: &quot;q&quot;).value(&quot;wikipedia&quot;)
+
+    // wait for the change to results page to happen
+    // (google updates the page dynamically without a new request)
+    waitFor { title.endsWith(&quot;Google Search&quot;) }
+
+    // is the first link to wikipedia?
+    def firstLink = $(&quot;li.g&quot;, 0).find(&quot;a.l&quot;)
+    assert firstLink.text() == &quot;Wikipedia&quot;
+
+    // click the link
+    firstLink.click()
+
+    // wait for Google&#39;s javascript to redirect to Wikipedia
+    waitFor { title == &quot;Wikipedia&quot; }
+}</code></pre>
+</section>
+<section id="introductory-example---scripting-with-page-objects">
+<section>
+<h2>Page Objects</h2>
+<p>Defining page objects</p>
+<pre><code>import geb.Browser
+import geb.Page
+import geb.Module
+
+// modules are reusable fragments that can be used across pages that can be paramaterised
+// here we are using a module to model the search function on the home and results pages
+class GoogleSearchModule extends Module {
+
+    // a paramaterised value set when the module is included
+    def buttonValue
+
+    // the content DSL
+    static content = {
+
+        // name the search input control “field”, defining it with the jQuery like navigator
+        field { $(&quot;input&quot;, name: &quot;q&quot;) }
+
+        // the search button declares that it takes us to the results page, and uses the
+        // parameterised buttonValue to define itself
+        button(to: GoogleResultsPage) {
+            $(&quot;input&quot;, value: buttonValue)
+        }
+    }
+}
+
+class GoogleHomePage extends Page {
+
+    // pages can define their location, either absolutely or relative to a base
+    static url = &quot;http://google.com/ncr&quot;
+
+    // “at checkers” allow verifying that the browser is at the expected page
+    static at = { title == &quot;Google&quot; }
+
+    static content = {
+        // include the previously defined module
+        search { module GoogleSearchModule, buttonValue: &quot;Google Search&quot; }
+    }
+}
+
+class GoogleResultsPage extends Page {
+    static at = { title.endsWith &quot;Google Search&quot; }
+    static content = {
+        // reuse our previously defined module
+        search { module GoogleSearchModule, buttonValue: &quot;Search&quot; }
+
+        // content definitions can compose and build from other definitions
+        results { $(&quot;li.g&quot;) }
+        result { i -&gt; results[i] }
+        resultLink { i -&gt; result(i).find(&quot;a.l&quot;) }
+        firstResultLink { resultLink(0) }
+    }
+}
+
+class WikipediaPage extends Page {
+    static at = { title == &quot;Wikipedia&quot; }
+}
+</code></pre>
+</section>
+<section id="introductory-example---page-objects">
+<h2>Page Objects</h2>
+<p>Using page objects</p>
+<pre><code>Browser.drive {
+    to GoogleHomePage
+    assert at(GoogleHomePage)
+    search.field.value(&quot;wikipedia&quot;)
+    waitFor { at GoogleResultsPage }
+    assert firstResultLink.text() == &quot;Wikipedia&quot;
+    firstResultLink.click()
+    waitFor { at WikipediaPage }
+}</code></pre>
+</section>
+</section>
+<section id="introductory-example---testing">
+<h2>Testing</h2>
+<p>Geb has out of the box integration with <em>Spock</em>, <em>JUnit</em>, <em>TestNG</em>, <em>Cucumber</em>, and <em>EasyB</em></p>
+<p>Using Spock as an example:</p>
+<pre><code>import geb.spock.GebSpec
+
+class GoogleWikipediaSpec extends GebSpec {
+
+    def &quot;first result for wikipedia search should be wikipedia&quot;() {
+        given:
+          to GoogleHomePage
+
+        expect:
+          at GoogleHomePage
+
+        when:
+          search.field.value(&quot;wikipedia&quot;)
+
+        then:
+          waitFor { at GoogleResultsPage }
+
+        and:
+          firstResultLink.text() == &quot;Wikipedia&quot;
+
+        when:
+          firstResultLink.click()
+
+        then:
+          waitFor { at WikipediaPage }
+    }
+}</code></pre>
+</section>
+
+<section id="interacting-with-content-1">
+<h2>Interacting with Content</h2>
+<p>A large number of examples are in <a href="http://www.gebish.org/manual/current/"><em>The Book of Geb</em></a></p>
+<pre><code class="xml" data-trim>
+static content = {
+  // Simple template - h2 with id &#39;my_header&#39;
+  header { $(&#39;h2&#39;, id: &#39;my_header&#39;) }
+
+  // Optional Element - a div with id &#39;a&#39;
+  // Do not cache - look it up each time (good for dynamic content like CQ page...)
+  theDiv(cache: false, required: false) { $(&#39;div&#39;, id: &#39;a&#39;)
+
+  // An anchor/link tag with the text &#39;Help&#39;
+  // Explicitly Specify which page this takes us to
+  helpLink(to: HelpPage) { $(&#39;a&#39;, text: &#39;Help&#39;) }
+
+  // Dealing with delays in dynamic content
+  dynamicThing(wait: true) { $(&#39;p.dynamic&#39;) }
+
+  // Css style selector
+  thing { $(&quot;div.some-class p:first[title=&#39;something&#39;]&quot;) }
+
+  // Indexes and ranges
+  paragraph { $(&#39;p&#39;, 0) }
+  par { $(&#39;p&#39;, 0..2) }
+
+  // Text patterns
+  text { $(&#39;p&#39;, text: startsWith(&#39;Welcome&#39;) }
+
+  // Relationships
+  parentDiv { $(&#39;div&#39;).parent() }
+}
+</code></pre>
+</section>
+<section id="interacting-with-content-2">
+<h2>Interacting with Content</h2>
+<pre><code>// Field values
+$(&#39;input&#39;, id: &#39;my_text_field&#39;).text = &#39;filling in a field&#39;
+def theText = $(&#39;input&#39;, id: &#39;my_text_field&#39;).text
+
+// Send keystrokes
+$(&#39;div&#39;) &lt;&lt; &quot;abcdef&quot;
+$(&#39;div&#39;, id: &#39;jira.issue4&#39;) &lt;&lt; Keyx.chord(Keys.CONTROL, &#39;i&#39;)
+
+// Radio
+$(&#39;form&#39;).my_radio_input = &#39;my selection&#39;
+
+// File Upload
+$(&#39;input&#39;, type: file).element_name = &#39;/path/to/my/file.txt&#39;
+
+// Drag and Drop
+interact {
+  clickAndHold $(&#39;#element&#39;)
+  moveByOffset 400, -150
+  release()
+}
+</code></pre>
+</section>
+
+<section id="resources">
+<h2>Geb Resources</h2>
+<ul>
+<li><a href="http://www.gebish.org">Geb Homepage</a></li>
+<li><a href="http://www.gebish.org/manual/current/">The Book of Geb</a></li>
+<li><a href="http://www.github.com/geb/">Geb at Github</a></li>
+</ul>
+</section>
+
+<section>
+    <h1>DEMO</h1>
+</section>
+		
+				<section>
+					<h1>Q&A</h1>
+					<div><a href="https://github.com/amondel2/techtalk">Github</a></div>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/search/search.js', async: true, condition: function() { return !!document.body.classList; } }
+					// { src: 'plugin/remotes/remotes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>

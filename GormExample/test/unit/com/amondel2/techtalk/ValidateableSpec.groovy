@@ -4,20 +4,6 @@ import spock.lang.Specification
 import grails.test.mixin.support.*
 
 class ValidateableSpec extends Specification {
-
-    String getLongString(Integer length) {
-	def longString = ""
-	length.times { longString += "a" }
-	longString
-    }
-
-    Long getLong(Integer len) {
-	def longString = ""
-	len.times { longString += "1" }
-	def l = Long.valueOf(longString)
-	l
-    }
-
     void validateConstraints(obj, obj2,field, error,dObj) {
 	mockForConstraintsTests(dObj, [obj2])
 	def validated = obj.validate()

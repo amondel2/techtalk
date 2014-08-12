@@ -3,7 +3,8 @@ package com.amondel2.techtalk
 import grails.converters.JSON
 import grails.web.JSONBuilder
 
-class CompanyService extends BaseService {    
+class CompanyService extends BaseService {  
+    
     def transformResultForJtree(jsonResult) {
 	def transofrmResult = { node ->
 	  [ 'id' : node.id, 'text': node.name, 'children' :node.organizations?.size() > 0 ? true : false,childType: 'organization']

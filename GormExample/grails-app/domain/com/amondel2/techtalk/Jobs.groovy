@@ -21,7 +21,7 @@ class Jobs {
 	table "Jobs"
 	id generator: 'assigned'
 	version false
-	organaization cascade: "all"
+	organaization cascade: "none"
 	employees cascade: "all-delete-orphan"
     }
 

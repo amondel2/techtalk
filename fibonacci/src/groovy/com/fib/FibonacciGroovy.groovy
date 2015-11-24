@@ -6,8 +6,8 @@ class FibonacciGroovy {
 
     static BigInteger fibDynamic( Integer index ) {
 	    BigInteger result = 0
-	    BigInteger prev = 1
-	    BigInteger current = 0
+	    BigInteger prev = 0
+	    BigInteger current = 1
 	    index.times { 
 		result = current + prev
 		prev = current
@@ -19,8 +19,8 @@ class FibonacciGroovy {
     @CompileStatic
     static BigInteger fibStatic( Integer index ) {
     BigInteger result = 0
-    BigInteger prev = 1
-    BigInteger current = 0
+    BigInteger prev = 0
+    BigInteger current = 1
     index.times { 
         result = current + prev
         prev = current

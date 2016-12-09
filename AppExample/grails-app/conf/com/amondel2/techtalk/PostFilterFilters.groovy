@@ -13,25 +13,25 @@ class PostFilterFilters {
     def filters = {
 	saveFilter(controller:'*', action:'save') {
 	    before = {
-		def req = request.JSON
-		request.JSON.id = baseService.generateGuid()
-		switch(controllerName) {
-		    case 'organization' :
-		    request.JSON.company = Company.findById(req.parentId)
-		    break
-		    case 'jobs' :
-		    request.JSON.organization = Organization.findById(req.parentId)
-		    break
-		    case 'employees' :
-		    def parent = Jobs.findById(req.parentId)
-		    if (parent) {
-			request.JSON.job = parent
-		    } else {
-		    	request.JSON.boss = Employees.findById(req.parentId) 
-		    }
-		    break
-
-		}
+                //		def req = request.JSON
+                //		request.JSON.id = baseService.generateGuid()
+                //		switch(controllerName) {
+                //		    case 'organization' :
+                //		    request.JSON.company = Company.findById(req.parentId)
+                //		    break
+                //		    case 'jobs' :
+                //		    request.JSON.organization = Organization.findById(req.parentId)
+                //		    break
+                //		    case 'employees' :
+                //		    def parent = Jobs.findById(req.parentId)
+                //		    if (parent) {
+                //			request.JSON.job = parent
+                //		    } else {
+                //		    	request.JSON.boss = Employees.findById(req.parentId)
+                //		    }
+                //		    break
+                //
+                //		}
 	    }
 	    after = { Map model ->
 

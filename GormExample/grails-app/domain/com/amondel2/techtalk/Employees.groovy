@@ -7,49 +7,60 @@ import grails.rest.*
 @Resource(uri='/employees', formats=['json', 'xml'])
 class Employees implements Serializable  {
 
+    def utilService = new Utils()
     private static final serialVersionUID = 1L
-    
+
     static constraints = {
-	firstName nullable:false,blank:false,unique:['lastName']
-	lastName nullable:false,blank:false
-	gender nullable:false,blank:false,inList:['Male','Female']
-	salary nullable:true,blank:true,validator: { val, obj ->
-	    if(val && val > 0 && (obj.slaryRate?.trim()?.size() == 0 || !obj.slaryRate)) {
-		return ['salaryRateMissing']
-	    }
-	}
-	boss nullable:true,blank:false
-	slaryRate nullable:true,blank:true,inList:['Yearly','Hourly']
-	id nullable:false,blank:false,unique:true,display:false
-	job nullable:true
+        firstName nullable:false,blank:false
+        employeId nullable:false,blank:false,unique:['employeId']
+        lastName nullable:false,blank:false
+        gender nullable:false,blank:false,inList:['Male', 'Female']
+        salary nullable:true,blank:true,validator: { val, obj ->
+            if(val && val > 0 && (obj.slaryRate?.trim()?.size() == 0 || !obj.slaryRate)) {
+                return ['salaryRateMissing']
+            }
+        }
+        slaryRate nullable:true,blank:true,inList:['Yearly', 'Hourly']
+        id display:false
+        job nullable:false,blank:false
     }
 
-
     static mapping = {
-	table "Employees"
-	job column: 'job_id'
-	boss column: 'boss_id'
-	id generator:'assigned'
-	version false
-	job cascade: "none"
-	boss cascade: "none"
-	directReports cascade: "all-delete-orphan"
+        id generator:'assigned'
+        version false
+        job cascade: "none"
+        boss cascade: "none"
+    }
+
+    def beforeValidate() {
+        if(!id || id.equals(null)) {
+            id  = utilService.idGenerator()
+        }
+    }
+
+    def beforeInsert() {
+        if(!id || id.equals(null)) {
+            id  = utilService.idGenerator()
+        }
     }
 
     public String toString(){
-	return this.firstName + ' ' + this.lastName
+        return this.firstName + ' ' + this.lastName
     }
 
-    static belongsTo = [job:Jobs,boss:Employees]
-    static hasMany = [directReports:Employees]
+    static belongsTo = [job:OrgJobs,company:Company]
+    static hasMany = [bosses:EmployeeBoss]
+    static mappedBy = [bosses:'boss']
 
+    Company company
+    String employeId
     String firstName
     String lastName
     String gender
     Float salary
     String slaryRate
     String id
-    Jobs job
+    OrgJobs job
     Boolean mangager = false
-    Employees boss = null
+
 }

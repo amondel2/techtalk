@@ -7,38 +7,43 @@ import grails.rest.*
 @EqualsAndHashCode(includes=['id'])
 @Resource(uri='/jobs', formats=['json', 'xml'])
 class Jobs {
-
+    def utilService = new Utils()
     private static final serialVersionUID = 1L
-    
+
     static constraints = {
-	name unique: true,nullable:false,blank:false
-	organization nullable:true,blank:false
-	id nullable:false,blank:false,unique:true,display:false
+        name unique: ['company'],nullable:false,blank:false
+        id display:false
     }
 
     static mapping = {
-	organaization column: 'organaization_id'
-	table "Jobs"
-	id generator: 'assigned'
-	version false
-	organaization cascade: "none"
-	employees cascade: "all-delete-orphan"
+        id generator: 'assigned'
+        version false
+        organaization cascade: "none"
+        employees cascade: "all-delete-orphan"
     }
 
     public String toString(){
-	return this.name
+        return this.name
     }
 
-    static hasMany = [employees:Employees]
+    def beforeValidate() {
+        if(!id || id.equals(null)) {
+            id  = utilService.idGenerator()
+        }
+    }
 
-    static belongsTo = [organization:Organization]
+    def beforeInsert() {
+        if(!id || id.equals(null)) {
+            id  = utilService.idGenerator()
+        }
+    }
+
+    static hasMany = [orgJobs:OrgJobs]
+    static belongsTo = [company:Company]
 
 
+    Company company
     String name
     String id
-    Organization organization
-
-
-
 
 }

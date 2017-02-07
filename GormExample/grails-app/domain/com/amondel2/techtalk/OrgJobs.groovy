@@ -72,6 +72,11 @@ class OrgJobs implements Serializable {
         }
     }
 
+    public String toString(){
+        return this.job?.toString() + " - " + this.org?.toString()
+    }
+
+
     static mapping = {
         version false
         id generator:'assigned'

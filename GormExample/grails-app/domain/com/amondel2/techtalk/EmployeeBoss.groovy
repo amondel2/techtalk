@@ -59,11 +59,13 @@ class EmployeeBoss implements Serializable {
     }
 
     def removeOtherDefaults() {
-        if(defaultBoss) {
+        if(this.defaultBoss) {
+            def e = this.employe
+            def b = this.boss
             def query = EmployeeBoss.where {
                 defaultBoss == true
-                employe == employe
-                boss != boss
+                employe == e
+                boss != b
             }
             query.updateAll(defaultBoss:false)
         }
@@ -87,6 +89,13 @@ class EmployeeBoss implements Serializable {
 
     def afterUpdate() {
         removeOtherDefaults()
+    }
+
+    public String toString(){
+        if(this.defaultBoss) {
+            return this.boss?.toString() + " is the offical boss of  " + this.employe?.toString()
+        }
+        return this.boss?.toString() + " is the lined boss of  " + this.employe?.toString()
     }
 
     static mapping = {

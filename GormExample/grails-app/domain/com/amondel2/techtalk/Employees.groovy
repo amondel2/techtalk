@@ -49,8 +49,8 @@ class Employees implements Serializable  {
     }
 
     static belongsTo = [job:OrgJobs,company:Company]
-    static hasMany = [bosses:EmployeeBoss]
-    static mappedBy = [bosses:'boss']
+    static hasMany = [bosses:EmployeeBoss,employees:EmployeeBoss]
+    static mappedBy = [bosses:'employe',employees:'boss']
 
     Company company
     String employeId

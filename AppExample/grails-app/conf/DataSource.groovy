@@ -25,8 +25,8 @@ environments {
             //		   username = "sa"
             //		   password = ""
             username = "root"
-            password = "splatt66"
-            url = "jdbc:mysql://localhost:3306/orgh?useUnicode=yes&characterEncoding=UTF-8"
+            password = "Tyf1RsAm6buT"
+            url = "jdbc:mysql://localhost:3306/orgh?useUnicode=yes&characterEncoding=UTF-8&autoReconnect=true&useSSL=false"
         }
     }
     test {

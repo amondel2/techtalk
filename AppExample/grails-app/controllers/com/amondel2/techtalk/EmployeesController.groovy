@@ -5,20 +5,27 @@ import static org.springframework.http.HttpStatus.*
 import static org.springframework.http.HttpMethod.*
 
 class EmployeesController extends RestfulController {
-   
+
     static responseFormats = ['json', 'xml']
+
+    def employeeService
+
     EmployeesController() {
-	    super(Employees)
+        super(Employees)
     }
-    
-    def parent() {
-	respond Employees.findAllByJob(Jobs.findAllById(params?.id))
-     }
-    
+
+    def getBosses() {
+        respond employeeService.getBosses(params?.id)
+    }
+
+    def getJob() {
+	respond employeeService.getJob(params.id)
+    }
+
     def directReports() {
-	respond Employees.findAllByBoss(Employees.findAllById(params?.id))
+	respond employeeService.getDirectReports(params.id)
     }
-    
+
     @Override
     protected Employees createResource() {
 	def r =  request.JSON

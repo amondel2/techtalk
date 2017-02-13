@@ -13,11 +13,11 @@ class CompanyController extends RestfulController{
         super(Company)
     }
 
-    def getSubOrgIds() {
-        respond Organization.findAllByCompanyAndParentIsNull(Company.findById(params.id))
+    def getSubOrgs() {
+        respond companyService.getChildren(params.id)
     }
 
-    def getAllSubOrgIds() {
+    def getAllSubOrgs() {
         respond companyService.getSubOrgs(params.id)
     }
 }

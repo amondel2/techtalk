@@ -14,7 +14,7 @@ class BootStrap {
     //
     //    private generateId(obj,autoSave) {
     //	ArrayList emptyAL = []
-    //	generateId(obj,autoSave,emptyAL, emptyAL)
+    //	generateId(obj,40,emptyAL, emptyAL)
     //    }
     //
     //    private generateId(obj,autoSave,parentObj,String properyName) {
@@ -274,212 +274,212 @@ class BootStrap {
         //
         //	//Employees
         //	//CEO
-        def e1 = new Employees(employeId:"1",firstName:"Marky",lastName:"Mark",gender:"Male",job:orgj15,manager:true,company:comp)
+        def e1 = new Employees(employeeId:"1",firstName:"Marky",lastName:"Mark",gender:"Male",job:orgj15,manager:true,company:comp)
         e1.save(flush:true, failOnError:true)
         try {
             e1.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e1 = Employees.findByEmployeId("1")
+            e1 = Employees.findByEmployeeId("1")
         }
 
         //Managers
-        def e2 = new Employees(employeId:"2",firstName:"George",lastName:"Clooney",gender:"Male",job:orgj5,manager:true,company:comp)
-        def e3 = new Employees(employeId:"3",firstName:"Marcy",lastName:"Darcy",gender:"Female",job:orgj10,manager:true,company:comp)
-        def e4 = new Employees(employeId:"4",firstName:"Jessica",lastName:"Simpson",gender:"Female",job:orgj14,manager:true,company:comp)
+        def e2 = new Employees(employeeId:"2",firstName:"George",lastName:"Clooney",gender:"Male",job:orgj5,manager:true,company:comp)
+        def e3 = new Employees(employeeId:"3",firstName:"Marcy",lastName:"Darcy",gender:"Female",job:orgj10,manager:true,company:comp)
+        def e4 = new Employees(employeeId:"4",firstName:"Jessica",lastName:"Simpson",gender:"Female",job:orgj14,manager:true,company:comp)
 
         try {
             e2.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e2 = Employees.findByEmployeId("2")
+            e2 = Employees.findByEmployeeId("2")
         }
 
         try {
             e3.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e3 = Employees.findByEmployeId("3")
+            e3 = Employees.findByEmployeeId("3")
         }
 
         try {
             e4.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e4 = Employees.findByEmployeId("4")
+            e4 = Employees.findByEmployeeId("4")
         }
 
-        def eb1 = new EmployeeBoss(employe:e2,boss:e1,defaultBoss:true)
+        def eb1 = new EmployeeBoss(employee:e2,boss:e1,defaultBoss:true)
         //        try{
         eb1.save(flush:true, failOnError:true)
         //        } catch  ( Exception e) {
-        //            eb1 = EmployeeBoss.findByEmployeAndBoss(e2,e1)
+        //            eb1 = EmployeeBoss.findByEmployeeAndBoss(e2,e1)
         //        }
 
-        def eb2 = new EmployeeBoss(employe:e3,boss:e1,defaultBoss:true)
+        def eb2 = new EmployeeBoss(employee:e3,boss:e1,defaultBoss:true)
         try{
             eb2.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb2 = EmployeeBoss.findByEmployeAndBoss(e3,e1)
+            eb2 = EmployeeBoss.findByEmployeeAndBoss(e3,e1)
         }
 
-        def eb3 = new EmployeeBoss(employe:e4,boss:e1,defaultBoss:true)
+        def eb3 = new EmployeeBoss(employee:e4,boss:e1,defaultBoss:true)
         try{
             eb3.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb3 = EmployeeBoss.findByEmployeAndBoss(e4,e1)
+            eb3 = EmployeeBoss.findByEmployeeAndBoss(e4,e1)
         }
 
-        def e16 = new Employees(employeId:"16",firstName:"Bill",lastName:"Gates",gender:"Male",job:orgj2,company:comp)
-        def e5 = new Employees(employeId:"5",firstName:"Steve",lastName:"Wozniak",gender:"Male",job:orgj2,company:comp)
-        def e6 = new Employees(employeId:"6",firstName:"Linus",lastName:"Torvalds",gender:"Male",job:orgj2,company:comp)
-        def e7 = new Employees(employeId:"7",firstName:"Alan",lastName:"Turing",gender:"Male",job:orgj3,company:comp)
-        def e8 = new Employees(employeId:"8",firstName:"Kevin",lastName:"Mitnick",gender:"Male",job:orgj3,company:comp)
-        def e9 = new Employees(employeId:"9",firstName:"John",lastName:"Carmack",gender:"Male",job:orgj3,company:comp)
-        def e10 = new Employees(employeId:"10",firstName:"Jess",lastName:"Cliffe",gender:"Male",job:orgj4,company:comp)
-        def e11 = new Employees(employeId:"11",firstName:"Cliff",lastName:"Bleszinski",gender:"Male",job:orgj4,company:comp)
-        def e12 = new Employees(employeId:"12",firstName:"John",lastName:"Romero",gender:"Male",job:orgj4,company:comp)
-        def e13 = new Employees(employeId:"13",firstName:"Mackey",lastName:"McCandlish",gender:"Male",job:orgj5,company:comp)
-        def e14 = new Employees(employeId:"14",firstName:"Stieg",lastName:"Hedlund",gender:"Male",job:orgj5,company:comp)
-        def e15 = new Employees(employeId:"15",firstName:"David",lastName:"Jones",gender:"Male",job:orgj5,company:comp)
+        def e16 = new Employees(employeeId:"16",firstName:"Bill",lastName:"Gates",gender:"Male",job:orgj2,company:comp)
+        def e5 = new Employees(employeeId:"5",firstName:"Steve",lastName:"Wozniak",gender:"Male",job:orgj2,company:comp)
+        def e6 = new Employees(employeeId:"6",firstName:"Linus",lastName:"Torvalds",gender:"Male",job:orgj2,company:comp)
+        def e7 = new Employees(employeeId:"7",firstName:"Alan",lastName:"Turing",gender:"Male",job:orgj3,company:comp)
+        def e8 = new Employees(employeeId:"8",firstName:"Kevin",lastName:"Mitnick",gender:"Male",job:orgj3,company:comp)
+        def e9 = new Employees(employeeId:"9",firstName:"John",lastName:"Carmack",gender:"Male",job:orgj3,company:comp)
+        def e10 = new Employees(employeeId:"10",firstName:"Jess",lastName:"Cliffe",gender:"Male",job:orgj4,company:comp)
+        def e11 = new Employees(employeeId:"11",firstName:"Cliff",lastName:"Bleszinski",gender:"Male",job:orgj4,company:comp)
+        def e12 = new Employees(employeeId:"12",firstName:"John",lastName:"Romero",gender:"Male",job:orgj4,company:comp)
+        def e13 = new Employees(employeeId:"13",firstName:"Mackey",lastName:"McCandlish",gender:"Male",job:orgj5,company:comp)
+        def e14 = new Employees(employeeId:"14",firstName:"Stieg",lastName:"Hedlund",gender:"Male",job:orgj5,company:comp)
+        def e15 = new Employees(employeeId:"15",firstName:"David",lastName:"Jones",gender:"Male",job:orgj5,company:comp)
 
         try {
             e16.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e16 = Employees.findByEmployeId("16")
+            e16 = Employees.findByEmployeeId("16")
         }
         try {
             e5.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e5 = Employees.findByEmployeId("5")
+            e5 = Employees.findByEmployeeId("5")
         }
         try {
             e6.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e6 = Employees.findByEmployeId("6")
+            e6 = Employees.findByEmployeeId("6")
         }
         try {
             e7.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e7 = Employees.findByEmployeId("7")
+            e7 = Employees.findByEmployeeId("7")
         }
         try {
             e8.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e8 = Employees.findByEmployeId("8")
+            e8 = Employees.findByEmployeeId("8")
         }
         try {
             e9.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e9 = Employees.findByEmployeId("9")
+            e9 = Employees.findByEmployeeId("9")
         }
         try {
             e10.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e10 = Employees.findByEmployeId("10")
+            e10 = Employees.findByEmployeeId("10")
         }
         try {
             e11.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e11 = Employees.findByEmployeId("11")
+            e11 = Employees.findByEmployeeId("11")
         }
         try {
             e12.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e12 = Employees.findByEmployeId("12")
+            e12 = Employees.findByEmployeeId("12")
         }
         try {
             e13.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e13 = Employees.findByEmployeId("13")
+            e13 = Employees.findByEmployeeId("13")
         }
         try {
             e14.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e14 = Employees.findByEmployeId("14")
+            e14 = Employees.findByEmployeeId("14")
         }
         try {
             e15.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            e15 = Employees.findByEmployeId("15")
+            e15 = Employees.findByEmployeeId("15")
         }
 
         def eb4 = new EmployeeBoss(employe:e16,boss:e2,defaultBoss:true)
         try{
             eb4.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb4 = EmployeeBoss.findByEmployeAndBoss(e16,e2)
+            eb4 = EmployeeBoss.findByEmployeeAndBoss(e16,e2)
         }
 
         def eb5 = new EmployeeBoss(employe:e5,boss:e2,defaultBoss:true)
         try{
             eb5.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb5 = EmployeeBoss.findByEmployeAndBoss(e5,e2)
+            eb5 = EmployeeBoss.findByEmployeeAndBoss(e5,e2)
         }
 
         def eb6 = new EmployeeBoss(employe:e6,boss:e2,defaultBoss:true)
         try{
             eb6.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb6 = EmployeeBoss.findByEmployeAndBoss(e6,e2)
+            eb6 = EmployeeBoss.findByEmployeeAndBoss(e6,e2)
         }
         def eb7 = new EmployeeBoss(employe:e7,boss:e2,defaultBoss:true)
         try{
             eb7.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb7 = EmployeeBoss.findByEmployeAndBoss(e7,e2)
+            eb7 = EmployeeBoss.findByEmployeeAndBoss(e7,e2)
         }
 
         def eb8 = new EmployeeBoss(employe:e8,boss:e2,defaultBoss:true)
         try{
             eb8.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb8 = EmployeeBoss.findByEmployeAndBoss(e8,e2)
+            eb8 = EmployeeBoss.findByEmployeeAndBoss(e8,e2)
         }
         def eb9 = new EmployeeBoss(employe:e16,boss:e9,defaultBoss:true)
         try{
             eb9.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb9 = EmployeeBoss.findByEmployeAndBoss(e9,e2)
+            eb9 = EmployeeBoss.findByEmployeeAndBoss(e9,e2)
         }
 
         def eb10 = new EmployeeBoss(employe:e10,boss:e2,defaultBoss:true)
         try{
             eb10.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb10 = EmployeeBoss.findByEmployeAndBoss(e10,e2)
+            eb10 = EmployeeBoss.findByEmployeeAndBoss(e10,e2)
         }
 
         def eb11 = new EmployeeBoss(employe:e11,boss:e2,defaultBoss:true)
         try{
             eb11.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb11 = EmployeeBoss.findByEmployeAndBoss(e11,e2)
+            eb11 = EmployeeBoss.findByEmployeeAndBoss(e11,e2)
         }
 
         def eb12 = new EmployeeBoss(employe:e12,boss:e2,defaultBoss:true)
         try{
             eb12.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb12 = EmployeeBoss.findByEmployeAndBoss(e12,e2)
+            eb12 = EmployeeBoss.findByEmployeeAndBoss(e12,e2)
         }
 
         def eb13 = new EmployeeBoss(employe:e13,boss:e2,defaultBoss:true)
         try{
             eb13.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb13 = EmployeeBoss.findByEmployeAndBoss(e13,e2)
+            eb13 = EmployeeBoss.findByEmployeeAndBoss(e13,e2)
         }
 
         def eb14 = new EmployeeBoss(employe:e14,boss:e2,defaultBoss:true)
         try{
             eb14.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb14 = EmployeeBoss.findByEmployeAndBoss(e14,e2)
+            eb14 = EmployeeBoss.findByEmployeeAndBoss(e14,e2)
         }
 
         def eb15 = new EmployeeBoss(employe:e15,boss:e2,defaultBoss:true)
         try{
             eb15.save(flush:true, failOnError:true)
         } catch  ( Exception e) {
-            eb15 = EmployeeBoss.findByEmployeAndBoss(e15,e2)
+            eb15 = EmployeeBoss.findByEmployeeAndBoss(e15,e2)
         }
 
         //	//HR - thank you http://www.imdb.com/list/ls056690043/

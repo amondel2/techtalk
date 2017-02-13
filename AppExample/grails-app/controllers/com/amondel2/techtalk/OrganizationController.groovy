@@ -6,8 +6,9 @@ import static org.springframework.http.HttpMethod.*
 
 class OrganizationController extends RestfulController {
 
-    def baseService
+
     def orgService
+
     static responseFormats = ['json', 'xml']
     OrganizationController() {
         super(Organization)
@@ -21,16 +22,23 @@ class OrganizationController extends RestfulController {
 	instance
     }
 
-    def getBaseOrgs() {
-        respond Organization.findAllByCompanyAndParentIsNull(Company.findById(params.id))
+    def getTopLevelOrgs() {
+        respond orgService.topLevelOrgs(params.id)
     }
 
-    def subOrgs() {
-        respond Organization.findById(params.id).subOrgs
+    def getJobs() {
+        respond orgService.getJobs(params.id)
     }
 
-    def getAllSubOrgIds() {
+    def getChildren() {
+        respond orgService.getChildren(params.id)
+    }
+
+    def getAllSubOrgs() {
         respond orgService.getSubOrgs(params.id)
     }
 
+    def getParent(){
+        respond orgService.getParent(params.id)
+    }
 }

@@ -12,7 +12,7 @@ class Employees implements Serializable  {
 
     static constraints = {
         firstName nullable:false,blank:false
-        employeId nullable:false,blank:false,unique:['employeId']
+        employeeId nullable:false,blank:false,unique:['employeeId']
         lastName nullable:false,blank:false
         gender nullable:false,blank:false,inList:['Male', 'Female']
         salary nullable:true,blank:true,validator: { val, obj ->
@@ -50,10 +50,10 @@ class Employees implements Serializable  {
 
     static belongsTo = [job:OrgJobs,company:Company]
     static hasMany = [bosses:EmployeeBoss,employees:EmployeeBoss]
-    static mappedBy = [bosses:'employe',employees:'boss']
+    static mappedBy = [bosses:'employee',employees:'boss']
 
     Company company
-    String employeId
+    String employeeId
     String firstName
     String lastName
     String gender

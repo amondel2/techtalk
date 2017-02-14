@@ -13,6 +13,7 @@ class UrlMappings {
 	"/jobs"(resources:"jobs")
 	"/organization"(resources:"organization")
 	"/employees"(resources:"employees")
+
         "/"(view:"/index")
         "500"(view:'/error')
 

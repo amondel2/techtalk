@@ -47,7 +47,7 @@ class OrgJobs implements Serializable {
     }
 
     static constraints = {
-        job validator: { Jobs j, OrgJobs oj  ->
+        job nullable:true,blank:false, validator: { Jobs j, OrgJobs oj  ->
             if (oj.org == null || oj.org.id == null) return
             boolean existing = false
             OrgJobs.withNewSession {

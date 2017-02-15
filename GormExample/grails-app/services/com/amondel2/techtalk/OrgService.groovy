@@ -5,6 +5,8 @@ import grails.transaction.Transactional
 @Transactional
 class OrgService extends BaseService {
 
+    static allowedMethods = [findOrgByExternalId:'POST',getSubOrgs:'GET',getJobs:'GET',getChildren:'GET',topLevelOrgs:'GET',getParent:'GET']
+
     def getSubOrgs(orgId) {
         def id = []
         Organization.findById(orgId).subOrgs?.each{ org ->
@@ -14,6 +16,15 @@ class OrgService extends BaseService {
             }
         }
         id
+    }
+
+    def findOrgByExternalId(companyId,externalString) {
+        Organization.withCriteria{
+            eq('company',Company{
+                    eq('id',companyId)
+                })
+            ilike('orgUnitId','%' + externalString + '%')
+        }
     }
 
     def getJobs(orgId) {

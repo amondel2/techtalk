@@ -41,4 +41,8 @@ class OrganizationDBController extends RestfulController {
     def getParent(){
         respond orgService.getParent(params.id)
     }
+
+    def findOrgByExternalId() {
+        respond orgService.findOrgByExternalId(params.id,params.externalId)
+    }
 }

@@ -11,7 +11,7 @@ class Organization implements Serializable {
     private static final serialVersionUID = 1L
 
     static constraints = {
-        name nullable:false,blank:false,unique:['company','parent']
+        name nullable:false,blank:false,unique:['company']
         company nullable:false,blank:false
         parent  nullable:true,blank:false
         orgUnitId nullable:true, blank:false, unique:['company']

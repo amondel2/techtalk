@@ -34,6 +34,15 @@ class OrgService extends BaseService {
         }
     }
 
+    def findOrgByAccountId(companyId,accountId) {
+        Organization.withCriteria{
+            eq('company',Company{
+                    eq('id',companyId)
+                })
+            ilike('accountId','%' + accountId + '%')
+        }
+    }
+
     def getJobs(orgId) {
         OrgJobs.withCriteria{
             eq('org',Organization{
@@ -41,6 +50,8 @@ class OrgService extends BaseService {
                 })
         }
     }
+
+
 
     def getChildren(orgId) {
         Organization.findById(orgId).subOrgs

@@ -9,8 +9,7 @@ class OrganizationDBController extends RestfulController {
 
     def orgService
 
-    static allowedMethods = [findOrgByName:'GET',findOrgByExternalId:'GET',getAllSubOrgs:'GET',
-        getJobs:'GET',getChildren:'GET',getTopLevelOrgs:'GET',getParent:'GET']
+    static allowedMethods = [findOrg:'GET',getAllSubOrgs:'GET', getJobs:'GET',getChildren:'GET',getTopLevelOrgs:'GET',getParent:'GET']
     static responseFormats = ['json', 'xml']
     OrganizationDBController() {
         super(Organization)
@@ -44,11 +43,13 @@ class OrganizationDBController extends RestfulController {
         respond orgService.getParent(params.id)
     }
 
-    def findOrgByExternalId() {
-        respond orgService.findOrgByExternalId(params.id,params.externalId)
-    }
-
-    def findOrgByName() {
-        respond orgService.findOrgByName(params.id,params.name)
+    def findOrg() {
+        if(params.externalId){
+            respond orgService.findOrgByExternalId(params.id,params.externalId)
+        } else if(params.name) {
+            respond orgService.findOrgByName(params.id,params.name)
+        } else if(params.accountId) {
+            respond orgService.findOrgByAccountId(params.id,params.accountId)
+        }
     }
 }

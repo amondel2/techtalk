@@ -9,6 +9,8 @@ class OrganizationDBController extends RestfulController {
 
     def orgService
 
+    static allowedMethods = [findOrgByName:'GET',findOrgByExternalId:'GET',getAllSubOrgs:'GET',
+        getJobs:'GET',getChildren:'GET',getTopLevelOrgs:'GET',getParent:'GET']
     static responseFormats = ['json', 'xml']
     OrganizationDBController() {
         super(Organization)
@@ -44,5 +46,9 @@ class OrganizationDBController extends RestfulController {
 
     def findOrgByExternalId() {
         respond orgService.findOrgByExternalId(params.id,params.externalId)
+    }
+
+    def findOrgByName() {
+        respond orgService.findOrgByName(params.id,params.name)
     }
 }

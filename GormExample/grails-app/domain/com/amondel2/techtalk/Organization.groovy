@@ -15,6 +15,7 @@ class Organization implements Serializable {
         company nullable:false,blank:false
         parent  nullable:true,blank:false
         orgUnitId nullable:true, blank:false, unique:['company']
+        accountId  nullable:true, blank:false, unique:['company']
         id display:false
     }
 
@@ -54,6 +55,7 @@ class Organization implements Serializable {
     String id
     String name
     String orgUnitId
+    String accountId
     Company company
     Organization parent = null
 }
